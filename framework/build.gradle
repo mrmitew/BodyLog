@@ -1,0 +1,156 @@
+plugins {
+    id 'com.gladed.androidgitversion' version '0.3.4'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://clojars.org/repo/" }
+}
+
+apply plugin: 'com.android.application'
+
+androidGitVersion {
+    format = '%commit%'
+}
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+
+    defaultConfig {
+        applicationId "com.github.mrmitew.bodylog"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        multiDexEnabled false
+        versionCode versions.versionCode
+        versionName versions.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "GIT_SHA", "\"${androidGitVersion.name()}\""
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        //
+                        // AutoValue
+                        //
+
+                        //  If specified, maps/collections will default to their empty types
+                        // (e.g. List -> Collections.emptyList())
+                        'autovaluegson.defaultCollectionsToEmpty': 'true'
+                ]
+            }
+        }
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("../.signing/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+        release {
+            // FIXME
+            storeFile file("../.signing/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+    }
+
+    buildTypes {
+        debug {
+            versionNameSuffix "-" + androidGitVersion.name()
+            applicationIdSuffix ".debug"
+            debuggable true
+            jniDebuggable true
+            minifyEnabled false
+            zipAlignEnabled false
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            debuggable false
+            jniDebuggable false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    // Fixes common duplicate filenames from different libraries
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/rxjava.properties'
+        exclude 'META-INF/maven/com.squareup.okio/okio/pom.xml'
+        exclude 'META-INF/maven/com.squareup.okio/okio/pom.properties'
+        exclude 'META-INF/MANIFEST.MF'
+        exclude 'META-INF/.readme'
+        exclude '.readme'
+        return void
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Module dependencies
+    implementation project(':data')
+    implementation project(':adapter')
+    implementation project(':domain')
+
+    // Support lib
+
+    // UI libs
+    implementation "com.android.support:appcompat-v7:$versions.supportLibs"
+    implementation "com.android.support:design:$versions.supportLibs"
+    implementation "com.jakewharton:butterknife:$versions.butterknife"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$versions.butterknife"
+
+    // Reactive
+    implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava2"
+    implementation "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
+    implementation "com.jakewharton.rxbinding2:rxbinding:$versions.rxJava2Bindings"
+    implementation "com.jakewharton.rxrelay2:rxrelay:$versions.rxRelay2"
+
+    // Auth
+
+    // Storage
+    implementation "com.scottyab:secure-preferences-lib:$versions.securePrefs"
+    implementation "com.pixplicity.easyprefs:library:$versions.easyPrefs"
+
+    // HTTP
+
+    // Others
+//    implementation "com.android.support:multidex:$versions.multiDex"
+    implementation "com.google.dagger:dagger:$versions.dagger"
+    annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
+    implementation "frankiesardo:icepick:$versions.icePick"
+    annotationProcessor "frankiesardo:icepick-processor:$versions.icePick"
+    annotationProcessor "com.google.auto.value:auto-value:$versions.autoValue"
+    provided "com.jakewharton.auto.value:auto-value-annotations:$versions.autoValueAnnotations"
+    implementation "com.google.code.gson:gson:$versions.gson"
+
+    // Debugging & Inspecting
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
+    testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
+
+    // Testing
+    testImplementation "junit:junit:$versions.junit"
+    testImplementation "org.mockito:mockito-core:$versions.mockito"
+    androidTestImplementation "com.android.support.test:runner:$versions.supportTestRunner"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$versions.espresso"
+}

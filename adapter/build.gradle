@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.ltgt.gradle:gradle-apt-plugin:$versions.javaApt"
+    }
+}
+
+apply plugin: 'java-library'
+apply plugin: 'idea'
+apply plugin: 'net.ltgt.apt'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Module dependencies
+    compile project(':domain')
+
+    // Reactive
+
+    // Auth
+
+    // Storage
+
+    // HTTP
+
+    // Others
+    compileOnly "com.google.auto.value:auto-value:$versions.autoValue"
+    apt "com.google.auto.value:auto-value:$versions.autoValue"
+
+    // Debugging & Inspecting
+
+    // Testing
+    testCompile "junit:junit:$versions.junit"
+    testCompile "org.mockito:mockito-core:$versions.mockito"
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"

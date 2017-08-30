@@ -1,0 +1,87 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.0-beta2'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext.versions = [
+        versionCode         : 1,
+        versionName         : "1.0.0",
+        minSdk              : 19,
+        targetSdk           : 26,
+        compileSdk          : 26,
+        buildTools          : '26.0.0',
+
+        // UI libs
+        butterknife         : '8.5.1',
+        constraintLayout    : '1.0.2',
+        glide               : '4.0.0-RC0',
+
+        // Reactive
+        rxJava2             : '2.0.7',
+        rxAndroid           : '2.0.1',
+        rxJava2Extras       : '0.1.10',
+        rxJava2Bindings     : '2.0.0',
+        rxJava2Permissions  : '0.9.4@aar',
+        rxRelay2            : '2.0.0',
+
+        // Storage
+        easyPrefs           : '1.9.0',
+        securePrefs         : '0.1.4',
+
+        // Auth
+        googleApiClient     : '1.22.0',
+
+        // HTTP
+        retrofit            : '2.3.0',
+        okHttp              : '3.8.0',
+
+        // Firebase
+        firebase            : '11.0.4',
+
+        // Others
+        supportLibs         : '26.0.1',
+        playServices        : '11.0.4',
+        retrolambda         : '3.7.0',
+        javaApt             : '0.5',
+        dagger              : '2.10-rc4',
+        gson                : '2.8.1',
+        autoValue           : '1.4.1',
+        autoValueAnnotations: '1.4',
+        autoValueGson       : '0.5.0',
+        icePick             : '3.1.0',
+
+        // Debugging & Inspecting
+        leakcanary          : '1.5.1',
+        devmetrics          : "0.5",
+        findbugsJsr         : 'jsr305:2.0.1',
+        multiDex            : '1.0.2',
+
+        // Testing
+        junit               : '4.12',
+        mockito             : '2.7.22',
+        supportTestRunner   : '1.0.0',
+        espresso            : '3.0.0',
+        compileTesting      : '0.8',
+]

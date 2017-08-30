@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.ltgt.gradle:gradle-apt-plugin:$versions.javaApt"
+    }
+}
+
+
+apply plugin: 'java-library'
+apply plugin: 'idea'
+apply plugin: 'net.ltgt.apt'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Reactive
+    compile "io.reactivex.rxjava2:rxjava:$versions.rxJava2"
+    implementation "com.jakewharton.rxrelay2:rxrelay:$versions.rxRelay2"
+
+    // Auth
+
+    // Storage
+
+    // HTTP
+
+    // Others
+    compile "com.google.dagger:dagger:$versions.dagger"
+    apt "com.google.dagger:dagger-compiler:$versions.dagger"
+    compileOnly "com.google.auto.value:auto-value:$versions.autoValue"
+    apt "com.google.auto.value:auto-value:$versions.autoValue"
+
+    // Debugging & Inspecting
+
+    // Testing
+    testCompile "junit:junit:$versions.junit"
+    testCompile "org.mockito:mockito-core:$versions.mockito"
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
