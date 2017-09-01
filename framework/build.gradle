@@ -149,8 +149,8 @@ dependencies {
     testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
 
     // Testing
-    testImplementation "junit:junit:$versions.junit"
-    testImplementation "org.mockito:mockito-core:$versions.mockito"
+    testCompile "junit:junit:$versions.junit"
+    testCompile "org.mockito:mockito-core:$versions.mockito"
     androidTestImplementation "com.android.support.test:runner:$versions.supportTestRunner"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$versions.espresso"
 }
