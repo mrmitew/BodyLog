@@ -94,9 +94,6 @@ public class ProfileDetailsActivity extends BaseActivity implements ProfileDetai
         setContentView(R.layout.activity_profile_details);
         ButterKnife.bind(this);
         mCompositeDisposable.add(mProfileDetailsPresenter);
-        if (savedInstanceState == null) {
-            mProfileDetailsPresenter.bindIntents();
-        }
     }
 
     @Override
@@ -126,8 +123,8 @@ public class ProfileDetailsActivity extends BaseActivity implements ProfileDetai
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onStart() {
+        super.onStart();
         mProfileDetailsPresenter.bindIntents();
     }
 

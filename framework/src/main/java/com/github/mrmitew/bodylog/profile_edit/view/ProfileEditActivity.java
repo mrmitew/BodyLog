@@ -98,10 +98,6 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
         ButterKnife.bind(this);
 
         mCompositeDisposable.add(mProfileEditPresenter);
-
-        if (savedInstanceState == null) {
-            mProfileEditPresenter.bindIntents();
-        }
     }
 
     @Override
@@ -113,8 +109,8 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onStart() {
+        super.onStart();
         mProfileEditPresenter.bindIntents();
     }
 
