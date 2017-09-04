@@ -1,5 +1,6 @@
 package com.github.mrmitew.bodylog.profile_edit.view;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +17,6 @@ import com.github.mrmitew.bodylog.adapter.profile_common.intent.LoadProfileInten
 import com.github.mrmitew.bodylog.adapter.profile_edit.intent.CheckRequiredFieldsIntent;
 import com.github.mrmitew.bodylog.adapter.profile_edit.intent.SaveProfileIntent;
 import com.github.mrmitew.bodylog.adapter.profile_edit.model.ProfileEditState;
-import com.github.mrmitew.bodylog.adapter.profile_edit.presenter.ProfileEditPresenter;
 import com.github.mrmitew.bodylog.adapter.profile_edit.view.ProfileEditView;
 import com.github.mrmitew.bodylog.common.view.BaseActivity;
 import com.github.mrmitew.bodylog.di.activity.HasActivitySubcomponentBuilders;
@@ -25,13 +25,14 @@ import com.github.mrmitew.bodylog.profile_edit.di.ProfileEditActivityComponent;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
 
 public class ProfileEditActivity extends BaseActivity implements ProfileEditView {
+
+    private ProfileEditViewModel mViewModel;
+
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, ProfileEditActivity.class);
     }
@@ -88,16 +89,12 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
     @BindView(R.id.vg_state_error)
     ViewGroup mVgStateError;
 
-    @Inject
-    ProfileEditPresenter mProfileEditPresenter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
         ButterKnife.bind(this);
-
-        mCompositeDisposable.add(mProfileEditPresenter);
+        mViewModel = ViewModelProviders.of(this).get(ProfileEditViewModel.class);
     }
 
     @Override
@@ -111,13 +108,14 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
     @Override
     protected void onStart() {
         super.onStart();
-        mProfileEditPresenter.bindIntents();
+        mViewModel.attachView(this);
+        mViewModel.bindIntents();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mProfileEditPresenter.detachView();
+        mViewModel.detachView();
     }
 
     @Override

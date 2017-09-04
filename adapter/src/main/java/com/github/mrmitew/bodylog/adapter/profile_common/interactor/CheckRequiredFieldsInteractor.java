@@ -7,11 +7,13 @@ import com.github.mrmitew.bodylog.domain.executor.PostExecutionThread;
 import com.google.auto.value.AutoValue;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 
+@Singleton
 public class CheckRequiredFieldsInteractor implements ObservableTransformer<CheckRequiredFieldsIntent, CheckRequiredFieldsInteractor.State> {
     @AutoValue
     public abstract static class State extends PartialState {

@@ -11,6 +11,8 @@ import com.github.mrmitew.bodylog.di.activity.ActivityScope;
 import com.github.mrmitew.bodylog.profile_edit.view.ProfileEditActivity;
 import com.jakewharton.rxrelay2.BehaviorRelay;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import dagger.Subcomponent;
@@ -22,23 +24,26 @@ import dagger.Subcomponent;
         }
 )
 public interface ProfileEditActivityComponent extends ActivityComponent<ProfileEditActivity> {
+    @Singleton
+    @Module
+    class PresenterModule {
+        @Provides
+        ProfileEditPresenter providesProfileEditPresenter(LoadProfileInteractor loadProfileInteractor,
+                                                          CheckRequiredFieldsInteractor checkRequiredFieldsInteractor,
+                                                          SaveProfileInteractor saveProfileInteractor) {
+            return new ProfileEditPresenter(loadProfileInteractor, checkRequiredFieldsInteractor, saveProfileInteractor, BehaviorRelay.create());
+        }
+    }
 
     @Subcomponent.Builder
     interface Builder extends ActivityComponentBuilder<ProfileEditActivityComponent.ProfileEditActivityModule, ProfileEditActivityComponent> {
     }
 
+    @ActivityScope
     @Module
     class ProfileEditActivityModule extends ActivityModule<ProfileEditActivity> {
         public ProfileEditActivityModule(ProfileEditActivity activity) {
             super(activity);
-        }
-
-        @Provides
-        @ActivityScope
-        ProfileEditPresenter providesProfileEditPresenter(LoadProfileInteractor loadProfileInteractor,
-                                                          CheckRequiredFieldsInteractor checkRequiredFieldsInteractor,
-                                                          SaveProfileInteractor saveProfileInteractor) {
-            return new ProfileEditPresenter(provideActivity(), loadProfileInteractor, checkRequiredFieldsInteractor, saveProfileInteractor, BehaviorRelay.create());
         }
     }
 }

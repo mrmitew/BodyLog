@@ -1,5 +1,6 @@
 package com.github.mrmitew.bodylog.profile_details.view;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,15 +12,12 @@ import com.github.mrmitew.bodylog.R;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.github.mrmitew.bodylog.adapter.profile_common.intent.LoadProfileIntent;
 import com.github.mrmitew.bodylog.adapter.profile_details.model.ProfileDetailsState;
-import com.github.mrmitew.bodylog.adapter.profile_details.presenter.ProfileDetailsPresenter;
 import com.github.mrmitew.bodylog.adapter.profile_details.view.ProfileDetailsView;
 import com.github.mrmitew.bodylog.common.view.BaseActivity;
 import com.github.mrmitew.bodylog.di.activity.HasActivitySubcomponentBuilders;
 import com.github.mrmitew.bodylog.domain.repository.entity.Profile;
 import com.github.mrmitew.bodylog.profile_details.di.ProfileDetailsActivityComponent;
 import com.github.mrmitew.bodylog.profile_edit.view.ProfileEditActivity;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,15 +83,14 @@ public class ProfileDetailsActivity extends BaseActivity implements ProfileDetai
     // Instance variables
     //
 
-    @Inject
-    ProfileDetailsPresenter mProfileDetailsPresenter;
+    private ProfileDetailsViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_details);
         ButterKnife.bind(this);
-        mCompositeDisposable.add(mProfileDetailsPresenter);
+        mViewModel = ViewModelProviders.of(this).get(ProfileDetailsViewModel.class);
     }
 
     @Override
@@ -125,13 +122,14 @@ public class ProfileDetailsActivity extends BaseActivity implements ProfileDetai
     @Override
     protected void onStart() {
         super.onStart();
-        mProfileDetailsPresenter.bindIntents();
+        mViewModel.attachView(this);
+        mViewModel.bindIntents();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mProfileDetailsPresenter.detachView();
+        mViewModel.detachView();
     }
 
     private void inflate(Profile profile) {
