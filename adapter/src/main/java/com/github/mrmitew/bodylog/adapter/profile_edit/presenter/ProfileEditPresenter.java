@@ -4,7 +4,7 @@ import com.github.mrmitew.bodylog.adapter.common.model.PartialState;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.github.mrmitew.bodylog.adapter.common.model.UIIntent;
 import com.github.mrmitew.bodylog.adapter.common.presenter.BaseMviPresenter;
-import com.github.mrmitew.bodylog.adapter.common.view.BaseView;
+import com.github.mrmitew.bodylog.adapter.common.presenter.HasDetachableView;
 import com.github.mrmitew.bodylog.adapter.profile_common.intent.LoadProfileIntent;
 import com.github.mrmitew.bodylog.adapter.profile_common.interactor.CheckRequiredFieldsInteractor;
 import com.github.mrmitew.bodylog.adapter.profile_common.interactor.LoadProfileInteractor;
@@ -15,14 +15,11 @@ import com.github.mrmitew.bodylog.adapter.profile_edit.model.ProfileEditState;
 import com.github.mrmitew.bodylog.adapter.profile_edit.view.ProfileEditView;
 import com.jakewharton.rxrelay2.BehaviorRelay;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 
-public class ProfileEditPresenter extends BaseMviPresenter<ProfileEditState> {
-    //
-    // View
-    //
-    private final ProfileEditView mProfileEditView;
-
+public class ProfileEditPresenter extends BaseMviPresenter<ProfileEditView, ProfileEditState> implements HasDetachableView<ProfileEditView> {
     //
     // Interactors
     //
@@ -35,12 +32,12 @@ public class ProfileEditPresenter extends BaseMviPresenter<ProfileEditState> {
     //
     private final BehaviorRelay<PartialState> mProfilePartialStateRelay;
 
-    public ProfileEditPresenter(final ProfileEditView profileEditView,
-                                final LoadProfileInteractor loadProfileInteractor,
+    @Inject
+    public ProfileEditPresenter(final LoadProfileInteractor loadProfileInteractor,
                                 final CheckRequiredFieldsInteractor checkRequiredFieldsInteractor,
                                 final SaveProfileInteractor saveProfileInteractor,
                                 final BehaviorRelay<PartialState> profilePartialStateRelay) {
-        mProfileEditView = profileEditView;
+        super(null);
         mLoadProfileInteractor = loadProfileInteractor;
         mCheckRequiredFieldsInteractor = checkRequiredFieldsInteractor;
         mSaveProfileInteractor = saveProfileInteractor;
@@ -49,9 +46,9 @@ public class ProfileEditPresenter extends BaseMviPresenter<ProfileEditState> {
 
     @Override
     protected Observable<UIIntent> getViewIntents() {
-        return Observable.merge(mProfileEditView.getRequiredFieldsFilledInIntent(),
-                mProfileEditView.getSaveIntent(),
-                mProfileEditView.getLoadProfileIntent());
+        return Observable.merge(mView.getRequiredFieldsFilledInIntent(),
+                mView.getSaveIntent(),
+                mView.getLoadProfileIntent());
     }
 
     @Override
@@ -138,7 +135,13 @@ public class ProfileEditPresenter extends BaseMviPresenter<ProfileEditState> {
     }
 
     @Override
-    protected BaseView<ProfileEditState> getView() {
-        return mProfileEditView;
+    public void attachView(final ProfileEditView view) {
+        mView = view;
+    }
+
+    @Override
+    public void detachView() {
+        mView = null;
+        unbindIntents();
     }
 }

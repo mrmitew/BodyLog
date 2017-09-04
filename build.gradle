@@ -45,6 +45,7 @@ ext.versions = [
         rxJava2Bindings     : '2.0.0',
         rxJava2Permissions  : '0.9.4@aar',
         rxRelay2            : '2.0.0',
+        lifecycle           : '1.0.0-alpha9',
 
         // Storage
         easyPrefs           : '1.9.0',

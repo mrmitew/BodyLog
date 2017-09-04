@@ -4,21 +4,18 @@ import com.github.mrmitew.bodylog.adapter.common.model.PartialState;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.github.mrmitew.bodylog.adapter.common.model.UIIntent;
 import com.github.mrmitew.bodylog.adapter.common.presenter.BaseMviPresenter;
-import com.github.mrmitew.bodylog.adapter.common.view.BaseView;
+import com.github.mrmitew.bodylog.adapter.common.presenter.HasDetachableView;
 import com.github.mrmitew.bodylog.adapter.profile_common.intent.LoadProfileIntent;
 import com.github.mrmitew.bodylog.adapter.profile_common.interactor.LoadProfileInteractor;
 import com.github.mrmitew.bodylog.adapter.profile_details.model.ProfileDetailsState;
 import com.github.mrmitew.bodylog.adapter.profile_details.view.ProfileDetailsView;
 import com.jakewharton.rxrelay2.BehaviorRelay;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 
-public class ProfileDetailsPresenter extends BaseMviPresenter<ProfileDetailsState> {
-    //
-    // View
-    //
-    private final ProfileDetailsView mProfileDetailsView;
-
+public class ProfileDetailsPresenter extends BaseMviPresenter<ProfileDetailsView, ProfileDetailsState> implements HasDetachableView<ProfileDetailsView> {
     //
     // Interactors
     //
@@ -29,10 +26,10 @@ public class ProfileDetailsPresenter extends BaseMviPresenter<ProfileDetailsStat
     //
     private final BehaviorRelay<PartialState> mProfilePartialStateRelay;
 
-    public ProfileDetailsPresenter(final ProfileDetailsView profileDetailsView,
-                                   final LoadProfileInteractor loadProfileInteractor,
+    @Inject
+    public ProfileDetailsPresenter(final LoadProfileInteractor loadProfileInteractor,
                                    final BehaviorRelay<PartialState> profilePartialStateRelay) {
-        mProfileDetailsView = profileDetailsView;
+        super(null);
         mLoadProfileInteractor = loadProfileInteractor;
         mProfilePartialStateRelay = profilePartialStateRelay;
     }
@@ -86,12 +83,18 @@ public class ProfileDetailsPresenter extends BaseMviPresenter<ProfileDetailsStat
 
     @Override
     protected Observable<UIIntent> getViewIntents() {
-        return mProfileDetailsView.getLoadProfileIntent()
+        return mView.getLoadProfileIntent()
                 .cast(UIIntent.class);
     }
 
     @Override
-    protected BaseView<ProfileDetailsState> getView() {
-        return mProfileDetailsView;
+    public void attachView(final ProfileDetailsView view) {
+        mView = view;
+    }
+
+    @Override
+    public void detachView() {
+        mView = null;
+        unbindIntents();
     }
 }

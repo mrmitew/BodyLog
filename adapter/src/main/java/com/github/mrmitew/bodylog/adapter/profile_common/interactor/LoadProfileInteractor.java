@@ -10,11 +10,13 @@ import com.github.mrmitew.bodylog.domain.repository.entity.Profile;
 import com.google.auto.value.AutoValue;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.schedulers.Schedulers;
 
+@Singleton
 public class LoadProfileInteractor implements ObservableTransformer<LoadProfileIntent, LoadProfileInteractor.State> {
     @AutoValue
     public abstract static class State extends PartialState {
