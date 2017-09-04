@@ -12,7 +12,6 @@ import com.google.auto.value.AutoValue;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -80,7 +79,7 @@ public class LoadProfileInteractor implements ObservableTransformer<LoadProfileI
     }
 
     @Override
-    public ObservableSource<State> apply(final Observable<LoadProfileIntent> upstream) {
+    public Observable<State> apply(final Observable<LoadProfileIntent> upstream) {
         return upstream
                 .concatMap(__ -> buildUseCaseObservable())
                 .map(State::successful)
@@ -89,7 +88,7 @@ public class LoadProfileInteractor implements ObservableTransformer<LoadProfileI
                 .startWith(State.inProgress());
     }
 
-    private Observable<Profile> getUseCaseObservable() {
+    Observable<Profile> getUseCaseObservable() {
         return mRepository.getProfileRefreshing();
     }
 
