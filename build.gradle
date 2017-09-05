@@ -62,7 +62,7 @@ ext.versions = [
         firebase            : '11.0.4',
 
         // Others
-        supportLibs         : '26.0.1',
+        supportLibs         : '26.0.2',
         playServices        : '11.0.4',
         retrolambda         : '3.7.0',
         javaApt             : '0.5',

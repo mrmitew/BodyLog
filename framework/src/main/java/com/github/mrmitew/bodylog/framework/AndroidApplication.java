@@ -17,7 +17,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-public class AndroidApplication extends /*MultiDex*/Application implements HasActivitySubcomponentBuilders {
+public class AndroidApplication extends Application implements HasActivitySubcomponentBuilders {
     private static final String TAG = AndroidApplication.class.getSimpleName();
 
     @Inject
