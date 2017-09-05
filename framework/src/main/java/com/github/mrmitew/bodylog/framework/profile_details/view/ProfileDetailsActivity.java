@@ -16,8 +16,8 @@ import com.github.mrmitew.bodylog.adapter.profile_details.model.ProfileDetailsSt
 import com.github.mrmitew.bodylog.adapter.profile_details.presenter.ProfileDetailsPresenter;
 import com.github.mrmitew.bodylog.adapter.profile_details.view.ProfileDetailsView;
 import com.github.mrmitew.bodylog.domain.repository.entity.Profile;
-import com.github.mrmitew.bodylog.framework.common.view.BaseActivity;
 import com.github.mrmitew.bodylog.framework.common.view.BasePresenterHolder;
+import com.github.mrmitew.bodylog.framework.common.view.PresentableActivity;
 import com.github.mrmitew.bodylog.framework.di.activity.HasActivitySubcomponentBuilders;
 import com.github.mrmitew.bodylog.framework.di.presenter.PresenterHolderInjector;
 import com.github.mrmitew.bodylog.framework.profile_details.di.ProfileDetailsActivityComponent;
@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 
-public class ProfileDetailsActivity extends BaseActivity implements ProfileDetailsView {
+public class ProfileDetailsActivity extends PresentableActivity<ProfileDetailsView, ProfileDetailsState> implements ProfileDetailsView {
     public static class PresenterHolder extends BasePresenterHolder<ProfileDetailsView, ProfileDetailsState> {
         @Inject
         ProfileDetailsPresenter mPresenter;
@@ -104,18 +104,11 @@ public class ProfileDetailsActivity extends BaseActivity implements ProfileDetai
     @BindView(R.id.vg_state_error)
     ViewGroup mVgStateError;
 
-    //
-    // Instance variables
-    //
-
-    private PresenterHolder mPresenterHolder;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_details);
         ButterKnife.bind(this);
-        mPresenterHolder = ViewModelProviders.of(this).get(PresenterHolder.class);
     }
 
     @Override
@@ -124,6 +117,16 @@ public class ProfileDetailsActivity extends BaseActivity implements ProfileDetai
                 .activityModule(new ProfileDetailsActivityComponent.ProfileDetailsActivityModule(this))
                 .build()
                 .injectMembers(this);
+    }
+
+    @Override
+    protected PresenterHolder injectPresenterHolder() {
+        return ViewModelProviders.of(this).get(PresenterHolder.class);
+    }
+
+    @Override
+    protected ProfileDetailsView getView() {
+        return this;
     }
 
     @Override
@@ -147,19 +150,6 @@ public class ProfileDetailsActivity extends BaseActivity implements ProfileDetai
     @OnClick(R.id.btn_edit)
     public void onEditRequest() {
         startActivity(ProfileEditActivity.getCallingIntent(this));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPresenterHolder.attachView(this);
-        mPresenterHolder.bindIntents();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mPresenterHolder.detachView();
     }
 
     private void inflate(Profile profile) {

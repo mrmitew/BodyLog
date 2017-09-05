@@ -21,8 +21,8 @@ import com.github.mrmitew.bodylog.adapter.profile_edit.model.ProfileEditState;
 import com.github.mrmitew.bodylog.adapter.profile_edit.presenter.ProfileEditPresenter;
 import com.github.mrmitew.bodylog.adapter.profile_edit.view.ProfileEditView;
 import com.github.mrmitew.bodylog.domain.repository.entity.Profile;
-import com.github.mrmitew.bodylog.framework.common.view.BaseActivity;
 import com.github.mrmitew.bodylog.framework.common.view.BasePresenterHolder;
+import com.github.mrmitew.bodylog.framework.common.view.PresentableActivity;
 import com.github.mrmitew.bodylog.framework.di.activity.HasActivitySubcomponentBuilders;
 import com.github.mrmitew.bodylog.framework.di.presenter.PresenterHolderInjector;
 import com.github.mrmitew.bodylog.framework.profile_edit.di.ProfileEditActivityComponent;
@@ -35,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
 
-public class ProfileEditActivity extends BaseActivity implements ProfileEditView {
+public class ProfileEditActivity extends PresentableActivity<ProfileEditView, ProfileEditState> implements ProfileEditView {
     public static class PresenterHolder extends BasePresenterHolder<ProfileEditView, ProfileEditState> {
         @Inject
         ProfileEditPresenter mPresenter;
@@ -56,8 +56,6 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
     }
 
     private static final String TAG = "ProfileEditActivity";
-    
-    private PresenterHolder mViewModel;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, ProfileEditActivity.class);
@@ -120,7 +118,16 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
         ButterKnife.bind(this);
-        mViewModel = ViewModelProviders.of(this).get(PresenterHolder.class);
+    }
+
+    @Override
+    protected ProfileEditView getView() {
+        return this;
+    }
+
+    @Override
+    protected BasePresenterHolder<ProfileEditView, ProfileEditState> injectPresenterHolder() {
+        return ViewModelProviders.of(this).get(PresenterHolder.class);
     }
 
     @Override
@@ -129,19 +136,6 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
                 .activityModule(new ProfileEditActivityComponent.ProfileEditActivityModule(this))
                 .build()
                 .injectMembers(this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mViewModel.attachView(this);
-        mViewModel.bindIntents();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mViewModel.detachView();
     }
 
     @Override
