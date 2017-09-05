@@ -70,7 +70,7 @@ public class AndroidApplication extends /*MultiDex*/Application implements HasAc
         return true;
     }
 
-    public PresenterInjector getPresentorHolderInjector() {
+    public PresenterInjector getPresenterHolderInjector() {
         return mApplicationComponent;
     }
 }

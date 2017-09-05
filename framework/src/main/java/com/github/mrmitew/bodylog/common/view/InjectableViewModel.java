@@ -14,7 +14,7 @@ public abstract class InjectableViewModel extends AndroidViewModel {
     }
 
     private void setupActivityComponent() {
-        injectMembers(((AndroidApplication)getApplication()).getPresentorHolderInjector());
+        injectMembers(((AndroidApplication)getApplication()).getPresenterHolderInjector());
     }
 
     protected abstract void injectMembers(PresenterInjector presenterInjector);
