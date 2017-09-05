@@ -1,10 +1,9 @@
 package com.github.mrmitew.bodylog.adapter.profile_edit.presenter;
 
-import com.github.mrmitew.bodylog.adapter.common.model.PartialState;
+import com.github.mrmitew.bodylog.adapter.common.model.ResultState;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.github.mrmitew.bodylog.adapter.common.model.UIIntent;
-import com.github.mrmitew.bodylog.adapter.common.presenter.BaseMviPresenter;
-import com.github.mrmitew.bodylog.adapter.common.view.BaseView;
+import com.github.mrmitew.bodylog.adapter.common.presenter.DetachableMviPresenter;
 import com.github.mrmitew.bodylog.adapter.profile_common.intent.LoadProfileIntent;
 import com.github.mrmitew.bodylog.adapter.profile_common.interactor.CheckRequiredFieldsInteractor;
 import com.github.mrmitew.bodylog.adapter.profile_common.interactor.LoadProfileInteractor;
@@ -15,43 +14,64 @@ import com.github.mrmitew.bodylog.adapter.profile_edit.model.ProfileEditState;
 import com.github.mrmitew.bodylog.adapter.profile_edit.view.ProfileEditView;
 import com.jakewharton.rxrelay2.BehaviorRelay;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 
-public class ProfileEditPresenter extends BaseMviPresenter<ProfileEditState> {
-    //
-    // View
-    //
-    private final ProfileEditView mProfileEditView;
-
+public class ProfileEditPresenter extends DetachableMviPresenter<ProfileEditView, ProfileEditState> {
     //
     // Interactors
     //
+
+    /**
+     * Loads a profile from the repository
+     */
     private final LoadProfileInteractor mLoadProfileInteractor;
-    private final CheckRequiredFieldsInteractor mCheckRequiredFieldsInteractor;
+
+    /**
+     * Saves a profile into the repository
+     */
     private final SaveProfileInteractor mSaveProfileInteractor;
 
-    //
-    // Relays
-    //
-    private final BehaviorRelay<PartialState> mProfilePartialStateRelay;
+    /**
+     * Checks if all fields are properly filled in
+     */
+    private final CheckRequiredFieldsInteractor mCheckRequiredFieldsInteractor;
 
-    public ProfileEditPresenter(final ProfileEditView profileEditView,
-                                final LoadProfileInteractor loadProfileInteractor,
+    //
+    // State relays
+    //
+
+    /*
+     * State relays are subscribed to the business logic (model) and will cache (and perhaps* emit) the latest changes in the
+     * business logic.
+     *
+     * * If the View is not attached, the relays will keep a cached state of a particular result, which
+     * will be emitted as soon as the View attaches once again.
+     */
+
+    /**
+     * Profile state relay
+     */
+    private final BehaviorRelay<ResultState> mProfileResultStateRelay;
+
+    @Inject
+    public ProfileEditPresenter(final LoadProfileInteractor loadProfileInteractor,
                                 final CheckRequiredFieldsInteractor checkRequiredFieldsInteractor,
                                 final SaveProfileInteractor saveProfileInteractor,
-                                final BehaviorRelay<PartialState> profilePartialStateRelay) {
-        mProfileEditView = profileEditView;
+                                final BehaviorRelay<ResultState> profileResultStateRelay) {
+        super(null);
         mLoadProfileInteractor = loadProfileInteractor;
         mCheckRequiredFieldsInteractor = checkRequiredFieldsInteractor;
         mSaveProfileInteractor = saveProfileInteractor;
-        mProfilePartialStateRelay = profilePartialStateRelay;
+        mProfileResultStateRelay = profileResultStateRelay;
     }
 
     @Override
     protected Observable<UIIntent> getViewIntents() {
-        return Observable.merge(mProfileEditView.getRequiredFieldsFilledInIntent(),
-                mProfileEditView.getSaveIntent(),
-                mProfileEditView.getLoadProfileIntent());
+        return Observable.merge(mView.getRequiredFieldsFilledInIntent(),
+                mView.getSaveIntent(),
+                mView.getLoadProfileIntent());
     }
 
     @Override
@@ -59,15 +79,15 @@ public class ProfileEditPresenter extends BaseMviPresenter<ProfileEditState> {
         super.bindInternalIntents();
         mModelGateways.add(Observable.just(new LoadProfileIntent())
                 .compose(mLoadProfileInteractor)
-                .doOnNext(state -> System.out.println(String.format("[EDIT] [MODEL] (%s) : %s", state.hashCode(), state)))
-                .subscribe(mProfilePartialStateRelay));
+                .doOnNext(state -> System.out.println(String.format("[EDIT] [PROFILE MODEL] (%s) : %s", state.hashCode(), state)))
+                .subscribe(mProfileResultStateRelay));
     }
 
     @Override
-    protected Observable<PartialState> createPartialStateObservable(final Observable<UIIntent> uiIntentObservable) {
+    protected Observable<ResultState> createResultStateObservable(final Observable<UIIntent> uiIntentObservable) {
         return uiIntentObservable.publish(shared ->
                 Observable.merge(
-                        shared.ofType(LoadProfileIntent.class).flatMap(__ -> mProfilePartialStateRelay),
+                        shared.ofType(LoadProfileIntent.class).flatMap(__ -> mProfileResultStateRelay),
                         shared.ofType(CheckRequiredFieldsIntent.class).compose(mCheckRequiredFieldsInteractor),
                         shared.ofType(SaveProfileIntent.class).compose(mSaveProfileInteractor)
                 )
@@ -75,70 +95,65 @@ public class ProfileEditPresenter extends BaseMviPresenter<ProfileEditState> {
     }
 
     @Override
-    protected ProfileEditState createState(final ProfileEditState previousState, final PartialState partialState) {
-        if (partialState instanceof LoadProfileInteractor.State) {
-            if (partialState.isInProgress()) {
+    protected ProfileEditState createViewState(final ProfileEditState previousState, final ResultState resultState) {
+        if (resultState instanceof LoadProfileInteractor.State) {
+            if (resultState.isInProgress()) {
                 return previousState.toBuilder()
                         .setInProgress(true)
                         .setLoadSuccessful(false)
                         .setLoadError(StateError.Empty.INSTANCE)
                         .build();
-            } else if (partialState.isSuccessful()) {
+            } else if (resultState.isSuccessful()) {
                 return previousState.toBuilder()
                         .setInProgress(false)
                         .setLoadSuccessful(true)
-                        .setProfile(((LoadProfileInteractor.State) partialState).profile())
+                        .setProfile(((LoadProfileInteractor.State) resultState).profile())
                         .build();
-            } else if (!(partialState.error() instanceof StateError.Empty)) {
+            } else if (!(resultState.error() instanceof StateError.Empty)) {
                 return previousState.toBuilder()
                         .setInProgress(false)
                         .setLoadSuccessful(false)
-                        .setLoadError(partialState.error())
+                        .setLoadError(resultState.error())
                         .build();
             }
-        } else if (partialState instanceof SaveProfileInteractor.State) {
-            if (partialState.isInProgress()) {
+        } else if (resultState instanceof SaveProfileInteractor.State) {
+            if (resultState.isInProgress()) {
                 return previousState.toBuilder()
                         .setInProgress(true)
                         .setSaveSuccessful(false)
                         .setSaveError(StateError.Empty.INSTANCE)
                         .build();
-            } else if (partialState.isSuccessful()) {
+            } else if (resultState.isSuccessful()) {
                 return previousState.toBuilder()
                         .setInProgress(false)
                         .setSaveSuccessful(true)
                         .build();
-            } else if (!(partialState.error() instanceof StateError.Empty)) {
+            } else if (!(resultState.error() instanceof StateError.Empty)) {
                 return previousState.toBuilder()
                         .setInProgress(false)
                         .setSaveSuccessful(false)
-                        .setSaveError(partialState.error())
+                        .setSaveError(resultState.error())
                         .build();
             }
-        } else if (partialState instanceof CheckRequiredFieldsInteractor.State) {
-            if (partialState.isSuccessful()) {
+        } else if (resultState instanceof CheckRequiredFieldsInteractor.State) {
+            if (resultState.isSuccessful()) {
                 return previousState.toBuilder()
                         .setRequiredFieldsFilledIn(true)
                         .setRequiredFieldsError(StateError.Empty.INSTANCE)
                         .build();
-            } else if (!(partialState.error() instanceof StateError.Empty)) {
+            } else if (!(resultState.error() instanceof StateError.Empty)) {
                 return previousState.toBuilder()
                         .setRequiredFieldsFilledIn(false)
-                        .setRequiredFieldsError(partialState.error())
+                        .setRequiredFieldsError(resultState.error())
                         .build();
             }
         }
 
-        throw new IllegalArgumentException("Unknown partial state: " + partialState);
+        throw new IllegalArgumentException("Unknown partial state: " + resultState);
     }
 
     @Override
     protected ProfileEditState getInitialState() {
         return ProfileEditState.DefaultStateFactories.idle();
-    }
-
-    @Override
-    protected BaseView<ProfileEditState> getView() {
-        return mProfileEditView;
     }
 }

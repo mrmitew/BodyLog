@@ -124,6 +124,9 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
     implementation "com.jakewharton.rxbinding2:rxbinding:$versions.rxJava2Bindings"
     implementation "com.jakewharton.rxrelay2:rxrelay:$versions.rxRelay2"
+    implementation "android.arch.lifecycle:runtime:$versions.lifecycle"
+    implementation "android.arch.lifecycle:extensions:$versions.lifecycle"
+    annotationProcessor "android.arch.lifecycle:compiler:$versions.lifecycle"
 
     // Auth
 

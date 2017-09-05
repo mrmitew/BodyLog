@@ -1,40 +1,52 @@
 package com.github.mrmitew.bodylog.adapter.profile_details.presenter;
 
-import com.github.mrmitew.bodylog.adapter.common.model.PartialState;
+import com.github.mrmitew.bodylog.adapter.common.model.ResultState;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.github.mrmitew.bodylog.adapter.common.model.UIIntent;
-import com.github.mrmitew.bodylog.adapter.common.presenter.BaseMviPresenter;
-import com.github.mrmitew.bodylog.adapter.common.view.BaseView;
+import com.github.mrmitew.bodylog.adapter.common.presenter.DetachableMviPresenter;
 import com.github.mrmitew.bodylog.adapter.profile_common.intent.LoadProfileIntent;
 import com.github.mrmitew.bodylog.adapter.profile_common.interactor.LoadProfileInteractor;
 import com.github.mrmitew.bodylog.adapter.profile_details.model.ProfileDetailsState;
 import com.github.mrmitew.bodylog.adapter.profile_details.view.ProfileDetailsView;
 import com.jakewharton.rxrelay2.BehaviorRelay;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 
-public class ProfileDetailsPresenter extends BaseMviPresenter<ProfileDetailsState> {
-    //
-    // View
-    //
-    private final ProfileDetailsView mProfileDetailsView;
-
+public class ProfileDetailsPresenter extends DetachableMviPresenter<ProfileDetailsView, ProfileDetailsState> {
     //
     // Interactors
     //
+
+    /**
+     * Loads a profile from the repository
+     */
     private LoadProfileInteractor mLoadProfileInteractor;
 
     //
-    // Relays
+    // State relays
     //
-    private final BehaviorRelay<PartialState> mProfilePartialStateRelay;
 
-    public ProfileDetailsPresenter(final ProfileDetailsView profileDetailsView,
-                                   final LoadProfileInteractor loadProfileInteractor,
-                                   final BehaviorRelay<PartialState> profilePartialStateRelay) {
-        mProfileDetailsView = profileDetailsView;
+    /*
+     * State relays are subscribed to the business logic (model) and will cache (and perhaps* emit) the latest changes in the
+     * business logic.
+     *
+     * * If the View is not attached, the relays will keep a cached state of a particular result, which
+     * will be emitted as soon as the View attaches once again.
+     */
+
+    /**
+     * Profile state relay
+     */
+    private final BehaviorRelay<ResultState> mProfileResultStateRelay;
+
+    @Inject
+    public ProfileDetailsPresenter(final LoadProfileInteractor loadProfileInteractor,
+                                   final BehaviorRelay<ResultState> profileResultStateRelay) {
+        super(null);
         mLoadProfileInteractor = loadProfileInteractor;
-        mProfilePartialStateRelay = profilePartialStateRelay;
+        mProfileResultStateRelay = profileResultStateRelay;
     }
 
     @Override
@@ -42,41 +54,41 @@ public class ProfileDetailsPresenter extends BaseMviPresenter<ProfileDetailsStat
         super.bindInternalIntents();
         mModelGateways.add(Observable.just(new LoadProfileIntent())
                 .compose(mLoadProfileInteractor)
-                .doOnNext(state -> System.out.println(String.format("[DETAILS] [MODEL] (%s) : %s", state.hashCode(), state)))
-                .subscribe(mProfilePartialStateRelay));
+                .doOnNext(state -> System.out.println(String.format("[DETAILS] [PROFILE MODEL] (%s) : %s", state.hashCode(), state)))
+                .subscribe(mProfileResultStateRelay));
     }
 
     @Override
-    protected Observable<PartialState> createPartialStateObservable(final Observable<UIIntent> uiIntentObservable) {
+    protected Observable<ResultState> createResultStateObservable(final Observable<UIIntent> uiIntentObservable) {
         return uiIntentObservable
-                .publish(shared -> shared.ofType(LoadProfileIntent.class).flatMap(__ -> mProfilePartialStateRelay));
+                .publish(shared -> shared.ofType(LoadProfileIntent.class).flatMap(__ -> mProfileResultStateRelay));
     }
 
     @Override
-    protected ProfileDetailsState createState(final ProfileDetailsState previousState, final PartialState partialState) {
-        if (partialState instanceof LoadProfileInteractor.State) {
-            if (partialState.isInProgress()) {
+    protected ProfileDetailsState createViewState(final ProfileDetailsState previousState, final ResultState resultState) {
+        if (resultState instanceof LoadProfileInteractor.State) {
+            if (resultState.isInProgress()) {
                 return previousState.toBuilder()
                         .inProgress(true)
                         .loadSuccessful(false)
                         .loadError(StateError.Empty.INSTANCE)
                         .build();
-            } else if (partialState.isSuccessful()) {
+            } else if (resultState.isSuccessful()) {
                 return previousState.toBuilder()
                         .inProgress(false)
                         .loadSuccessful(true)
-                        .profile(((LoadProfileInteractor.State) partialState).profile())
+                        .profile(((LoadProfileInteractor.State) resultState).profile())
                         .build();
-            } else if (!(partialState.error() instanceof StateError.Empty)) {
+            } else if (!(resultState.error() instanceof StateError.Empty)) {
                 return previousState.toBuilder()
                         .inProgress(false)
                         .loadSuccessful(false)
-                        .loadError(partialState.error())
+                        .loadError(resultState.error())
                         .build();
             }
         }
 
-        throw new IllegalArgumentException("Unknown partial state: " + partialState);
+        throw new IllegalArgumentException("Unknown partial state: " + resultState);
     }
 
     @Override
@@ -86,12 +98,7 @@ public class ProfileDetailsPresenter extends BaseMviPresenter<ProfileDetailsStat
 
     @Override
     protected Observable<UIIntent> getViewIntents() {
-        return mProfileDetailsView.getLoadProfileIntent()
+        return mView.getLoadProfileIntent()
                 .cast(UIIntent.class);
-    }
-
-    @Override
-    protected BaseView<ProfileDetailsState> getView() {
-        return mProfileDetailsView;
     }
 }
