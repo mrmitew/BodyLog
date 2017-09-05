@@ -1,5 +1,7 @@
 package com.github.mrmitew.bodylog.profile_edit.view;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -11,12 +13,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.github.mrmitew.bodylog.AndroidApplication;
 import com.github.mrmitew.bodylog.R;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
+import com.github.mrmitew.bodylog.adapter.common.presenter.Bindable;
+import com.github.mrmitew.bodylog.adapter.common.presenter.HasDetachableView;
 import com.github.mrmitew.bodylog.adapter.profile_common.intent.LoadProfileIntent;
 import com.github.mrmitew.bodylog.adapter.profile_edit.intent.CheckRequiredFieldsIntent;
 import com.github.mrmitew.bodylog.adapter.profile_edit.intent.SaveProfileIntent;
 import com.github.mrmitew.bodylog.adapter.profile_edit.model.ProfileEditState;
+import com.github.mrmitew.bodylog.adapter.profile_edit.presenter.ProfileEditPresenter;
 import com.github.mrmitew.bodylog.adapter.profile_edit.view.ProfileEditView;
 import com.github.mrmitew.bodylog.common.view.BaseActivity;
 import com.github.mrmitew.bodylog.di.activity.HasActivitySubcomponentBuilders;
@@ -25,14 +31,52 @@ import com.github.mrmitew.bodylog.profile_edit.di.ProfileEditActivityComponent;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
 
 public class ProfileEditActivity extends BaseActivity implements ProfileEditView {
+    public static class ViewModel extends AndroidViewModel implements Bindable, HasDetachableView<ProfileEditView> {
+        @Inject
+        ProfileEditPresenter mPresenter;
+
+        public ViewModel(final Application application) {
+            super(application);
+            ((AndroidApplication) application).getApplicationComponent().inject(this);
+        }
+
+        @Override
+        protected void onCleared() {
+            super.onCleared();
+            detachView();
+        }
+
+        @Override
+        public void attachView(final ProfileEditView view) {
+            mPresenter.attachView(view);
+        }
+
+        @Override
+        public void detachView() {
+            mPresenter.detachView();
+        }
+
+        @Override
+        public void bindIntents() {
+            mPresenter.bindIntents();
+        }
+
+        @Override
+        public void unbindIntents() {
+            mPresenter.unbindIntents();
+        }
+    }
+
     private static final String TAG = "ProfileEditActivity";
     
-    private ProfileEditViewModel mViewModel;
+    private ViewModel mViewModel;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, ProfileEditActivity.class);
@@ -96,7 +140,7 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
         setContentView(R.layout.activity_profile_edit);
         ButterKnife.bind(this);
         Log.d(TAG, "onCreate: ");
-        mViewModel = ViewModelProviders.of(this).get(ProfileEditViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ViewModel.class);
     }
 
     @Override
