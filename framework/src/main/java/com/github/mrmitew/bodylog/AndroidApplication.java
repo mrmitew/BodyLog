@@ -9,7 +9,7 @@ import com.github.mrmitew.bodylog.di.activity.HasActivitySubcomponentBuilders;
 import com.github.mrmitew.bodylog.di.application.ApplicationComponent;
 import com.github.mrmitew.bodylog.di.application.ApplicationModule;
 import com.github.mrmitew.bodylog.di.application.DaggerApplicationComponent;
-import com.github.mrmitew.bodylog.di.presenter.PresenterInjector;
+import com.github.mrmitew.bodylog.di.presenter.PresenterHolderInjector;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.util.Map;
@@ -70,7 +70,7 @@ public class AndroidApplication extends /*MultiDex*/Application implements HasAc
         return true;
     }
 
-    public PresenterInjector getPresenterHolderInjector() {
+    public PresenterHolderInjector getPresenterHolderInjector() {
         return mApplicationComponent;
     }
 }

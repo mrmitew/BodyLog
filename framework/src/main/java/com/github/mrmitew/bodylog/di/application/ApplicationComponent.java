@@ -1,7 +1,7 @@
 package com.github.mrmitew.bodylog.di.application;
 
 import com.github.mrmitew.bodylog.AndroidApplication;
-import com.github.mrmitew.bodylog.di.presenter.PresenterInjector;
+import com.github.mrmitew.bodylog.di.presenter.PresenterHolderInjector;
 import com.github.mrmitew.bodylog.profile_details.di.ProfileDetailsActivityComponent;
 import com.github.mrmitew.bodylog.profile_edit.di.ProfileEditActivityComponent;
 import com.github.mrmitew.bodylog.repository.di.RepositoryModule;
@@ -20,6 +20,6 @@ import dagger.Component;
                 ProfileEditActivityComponent.PresenterModule.class,
         }
 )
-public interface ApplicationComponent extends PresenterInjector {
+public interface ApplicationComponent extends PresenterHolderInjector {
     AndroidApplication inject(AndroidApplication application);
 }

@@ -23,7 +23,7 @@ import com.github.mrmitew.bodylog.adapter.profile_edit.view.ProfileEditView;
 import com.github.mrmitew.bodylog.common.view.BaseActivity;
 import com.github.mrmitew.bodylog.common.view.BasePresenterHolder;
 import com.github.mrmitew.bodylog.di.activity.HasActivitySubcomponentBuilders;
-import com.github.mrmitew.bodylog.di.presenter.PresenterInjector;
+import com.github.mrmitew.bodylog.di.presenter.PresenterHolderInjector;
 import com.github.mrmitew.bodylog.domain.repository.entity.Profile;
 import com.github.mrmitew.bodylog.profile_edit.di.ProfileEditActivityComponent;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -50,7 +50,7 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
         }
 
         @Override
-        protected void injectMembers(final PresenterInjector injector) {
+        protected void injectMembers(final PresenterHolderInjector injector) {
             injector.inject(this);
         }
     }
