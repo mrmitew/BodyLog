@@ -139,7 +139,6 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
         ButterKnife.bind(this);
-        Log.d(TAG, "onCreate: ");
         mViewModel = ViewModelProviders.of(this).get(ViewModel.class);
     }
 
@@ -154,7 +153,6 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart: ");
         mViewModel.attachView(this);
         mViewModel.bindIntents();
     }
@@ -162,20 +160,11 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop: ");
         mViewModel.detachView();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
-    }
-
-    @Override
     public void render(final ProfileEditState state) {
-        Log.d("edit", "render: " + state);
-
         // Widgets
         mBtnSave.setEnabled(state.getRequiredFieldsFilledIn() && state.getRequiredFieldsError().equals(StateError.Empty.INSTANCE));
 
@@ -189,7 +178,8 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
         mVgStateResult.setVisibility(state.getLoadError().equals(StateError.Empty.INSTANCE) ? View.VISIBLE : View.GONE);
 
         if (!state.isSaveSuccessful() && !state.getSaveError().equals(StateError.Empty.INSTANCE)) {
-            Log.e("edit", "render: ", state.getSaveError());
+            // TODO: 9/5/17 Give feedback to the user
+            Log.e(TAG, "render: ", state.getSaveError());
         }
     }
 
