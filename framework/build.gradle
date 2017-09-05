@@ -115,7 +115,6 @@ dependencies {
 
     // UI libs
     implementation "com.android.support:appcompat-v7:$versions.supportLibs"
-    implementation "com.android.support:design:$versions.supportLibs"
     implementation "com.jakewharton:butterknife:$versions.butterknife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$versions.butterknife"
 
@@ -137,7 +136,6 @@ dependencies {
     // HTTP
 
     // Others
-//    implementation "com.android.support:multidex:$versions.multiDex"
     implementation "com.google.dagger:dagger:$versions.dagger"
     annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
     implementation "frankiesardo:icepick:$versions.icePick"

@@ -1,2 +1,2 @@
 # Bodylog
-Dummy app that tries to demonstrate an example implementation of Model-View-Intent design pattern
+A (Work-In-Progress) dummy app that tries to demonstrate an implementation of the Model-View-Intent (MVI) design pattern.
