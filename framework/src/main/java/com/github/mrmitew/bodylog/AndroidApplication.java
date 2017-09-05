@@ -9,6 +9,7 @@ import com.github.mrmitew.bodylog.di.activity.HasActivitySubcomponentBuilders;
 import com.github.mrmitew.bodylog.di.application.ApplicationComponent;
 import com.github.mrmitew.bodylog.di.application.ApplicationModule;
 import com.github.mrmitew.bodylog.di.application.DaggerApplicationComponent;
+import com.github.mrmitew.bodylog.di.presenter.PresenterInjector;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.util.Map;
@@ -67,5 +68,9 @@ public class AndroidApplication extends /*MultiDex*/Application implements HasAc
 
         LeakCanary.install(this);
         return true;
+    }
+
+    public PresenterInjector getViewModelInjector() {
+        return mApplicationComponent;
     }
 }
