@@ -30,7 +30,8 @@ import butterknife.ButterKnife;
 import io.reactivex.Observable;
 
 public class ProfileEditActivity extends BaseActivity implements ProfileEditView {
-
+    private static final String TAG = "ProfileEditActivity";
+    
     private ProfileEditViewModel mViewModel;
 
     public static Intent getCallingIntent(Context context) {
@@ -94,6 +95,7 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
         ButterKnife.bind(this);
+        Log.d(TAG, "onCreate: ");
         mViewModel = ViewModelProviders.of(this).get(ProfileEditViewModel.class);
     }
 
@@ -108,6 +110,7 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d(TAG, "onStart: ");
         mViewModel.attachView(this);
         mViewModel.bindIntents();
     }
@@ -115,7 +118,14 @@ public class ProfileEditActivity extends BaseActivity implements ProfileEditView
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d(TAG, "onStop: ");
         mViewModel.detachView();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
     }
 
     @Override

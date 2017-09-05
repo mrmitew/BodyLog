@@ -1,6 +1,6 @@
 package com.github.mrmitew.bodylog.adapter.profile_common.interactor;
 
-import com.github.mrmitew.bodylog.adapter.common.model.PartialState;
+import com.github.mrmitew.bodylog.adapter.common.model.ResultState;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.github.mrmitew.bodylog.adapter.profile_edit.intent.CheckRequiredFieldsIntent;
 import com.github.mrmitew.bodylog.domain.executor.PostExecutionThread;
@@ -16,7 +16,7 @@ import io.reactivex.ObservableTransformer;
 @Singleton
 public class CheckRequiredFieldsInteractor implements ObservableTransformer<CheckRequiredFieldsIntent, CheckRequiredFieldsInteractor.State> {
     @AutoValue
-    public abstract static class State extends PartialState {
+    public abstract static class State extends ResultState {
         public static class Error {
             public static final class FieldsNotFilledInThrowable extends Throwable {
                 @Override

@@ -90,6 +90,7 @@ public class ProfileDetailsActivity extends BaseActivity implements ProfileDetai
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_details);
         ButterKnife.bind(this);
+        Log.d(TAG, "onCreate: ");
         mViewModel = ViewModelProviders.of(this).get(ProfileDetailsViewModel.class);
     }
 
@@ -122,6 +123,7 @@ public class ProfileDetailsActivity extends BaseActivity implements ProfileDetai
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d(TAG, "onStart: ");
         mViewModel.attachView(this);
         mViewModel.bindIntents();
     }
@@ -129,7 +131,14 @@ public class ProfileDetailsActivity extends BaseActivity implements ProfileDetai
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d(TAG, "onStop: ");
         mViewModel.detachView();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
     }
 
     private void inflate(Profile profile) {
@@ -145,6 +154,7 @@ public class ProfileDetailsActivity extends BaseActivity implements ProfileDetai
 
     @Override
     public Observable<LoadProfileIntent> getLoadProfileIntent() {
-        return Observable.just(new LoadProfileIntent());
+        return Observable.just(new LoadProfileIntent())
+                .doOnNext(__-> Log.d(TAG, "getLoadProfileIntent: "));
     }
 }

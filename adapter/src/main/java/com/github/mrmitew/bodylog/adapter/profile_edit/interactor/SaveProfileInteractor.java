@@ -1,6 +1,6 @@
 package com.github.mrmitew.bodylog.adapter.profile_edit.interactor;
 
-import com.github.mrmitew.bodylog.adapter.common.model.PartialState;
+import com.github.mrmitew.bodylog.adapter.common.model.ResultState;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.github.mrmitew.bodylog.adapter.profile_edit.intent.SaveProfileIntent;
 import com.github.mrmitew.bodylog.domain.executor.PostExecutionThread;
@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 @Singleton
 public class SaveProfileInteractor implements ObservableTransformer<SaveProfileIntent, SaveProfileInteractor.State> {
     @AutoValue
-    public abstract static class State extends PartialState {
+    public abstract static class State extends ResultState {
         public abstract Profile profile();
 
         public static Builder builder() {
