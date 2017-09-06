@@ -16,9 +16,6 @@ In addition, presenters create **_BehaviourRelay_**_(s)_ that work as a gateway 
 
 In order to preserve _Presenter(s)_ in memory during orientation change, they are injected into a **_PresenterHolder_** that extends from Android's _ViewModel_ (https://developer.android.com/topic/libraries/architecture/viewmodel.html). Throughout the lifecycle of an activity/fragment, *_View_*s get detached and reatached to *_Presenter_*s, so no memory leaks would occur.
 
-## View updates when Activity/Fragment/View is alive, but not visible on current screen
-Presenter 
-
 ## Libraries used in this project
 
 ### UI libraries 
