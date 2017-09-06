@@ -27,20 +27,6 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "GIT_SHA", "\"${androidGitVersion.name()}\""
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [
-                        //
-                        // AutoValue
-                        //
-
-                        //  If specified, maps/collections will default to their empty types
-                        // (e.g. List -> Collections.emptyList())
-                        'autovaluegson.defaultCollectionsToEmpty': 'true'
-                ]
-            }
-        }
     }
 
     signingConfigs {
@@ -144,8 +130,8 @@ dependencies {
     testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
 
     // Testing
-    testCompile "junit:junit:$versions.junit"
-    testCompile "org.mockito:mockito-core:$versions.mockito"
+    testImplementation "junit:junit:$versions.junit"
+    testImplementation "org.mockito:mockito-core:$versions.mockito"
     androidTestImplementation "com.android.support.test:runner:$versions.supportTestRunner"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$versions.espresso"
 }

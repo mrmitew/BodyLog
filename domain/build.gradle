@@ -19,7 +19,7 @@ dependencies {
 
     // Reactive
     compile "io.reactivex.rxjava2:rxjava:$versions.rxJava2"
-    implementation "com.jakewharton.rxrelay2:rxrelay:$versions.rxRelay2"
+    compile "com.jakewharton.rxrelay2:rxrelay:$versions.rxRelay2"
 
     // Auth
 
