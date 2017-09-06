@@ -3,9 +3,9 @@ package com.github.mrmitew.bodylog.framework.di.application;
 import com.github.mrmitew.bodylog.framework.di.activity.ActivityComponentBuilder;
 import com.github.mrmitew.bodylog.framework.di.activity.ActivityKey;
 import com.github.mrmitew.bodylog.framework.profile_details.di.ProfileDetailsActivityComponent;
-import com.github.mrmitew.bodylog.framework.profile_details.view.ProfileDetailsActivity;
+import com.github.mrmitew.bodylog.framework.profile_details.main.view.ProfileDetailsActivity;
 import com.github.mrmitew.bodylog.framework.profile_edit.di.ProfileEditActivityComponent;
-import com.github.mrmitew.bodylog.framework.profile_edit.view.ProfileEditActivity;
+import com.github.mrmitew.bodylog.framework.profile_edit.main.view.ProfileEditActivity;
 
 import dagger.Binds;
 import dagger.Module;

@@ -1,8 +1,8 @@
-package com.github.mrmitew.bodylog.adapter.profile_edit.interactor;
+package com.github.mrmitew.bodylog.adapter.profile_edit.main.interactor;
 
 import com.github.mrmitew.bodylog.adapter.common.model.ResultState;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
-import com.github.mrmitew.bodylog.adapter.profile_edit.intent.SaveProfileIntent;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.intent.SaveProfileIntent;
 import com.github.mrmitew.bodylog.domain.executor.PostExecutionThread;
 import com.github.mrmitew.bodylog.domain.executor.ThreadExecutor;
 import com.github.mrmitew.bodylog.domain.repository.Repository;

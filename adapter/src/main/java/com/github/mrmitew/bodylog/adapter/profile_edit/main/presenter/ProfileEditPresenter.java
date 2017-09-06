@@ -1,4 +1,4 @@
-package com.github.mrmitew.bodylog.adapter.profile_edit.presenter;
+package com.github.mrmitew.bodylog.adapter.profile_edit.main.presenter;
 
 import com.github.mrmitew.bodylog.adapter.common.model.ResultState;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
@@ -7,11 +7,11 @@ import com.github.mrmitew.bodylog.adapter.common.presenter.DetachableMviPresente
 import com.github.mrmitew.bodylog.adapter.profile_common.intent.LoadProfileIntent;
 import com.github.mrmitew.bodylog.adapter.profile_common.interactor.CheckRequiredFieldsInteractor;
 import com.github.mrmitew.bodylog.adapter.profile_common.interactor.LoadProfileInteractor;
-import com.github.mrmitew.bodylog.adapter.profile_edit.intent.CheckRequiredFieldsIntent;
-import com.github.mrmitew.bodylog.adapter.profile_edit.intent.SaveProfileIntent;
-import com.github.mrmitew.bodylog.adapter.profile_edit.interactor.SaveProfileInteractor;
-import com.github.mrmitew.bodylog.adapter.profile_edit.model.ProfileEditState;
-import com.github.mrmitew.bodylog.adapter.profile_edit.view.ProfileEditView;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.intent.CheckRequiredFieldsIntent;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.intent.SaveProfileIntent;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.interactor.SaveProfileInteractor;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.model.ProfileEditState;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.view.ProfileEditView;
 import com.jakewharton.rxrelay2.BehaviorRelay;
 
 import javax.inject.Inject;

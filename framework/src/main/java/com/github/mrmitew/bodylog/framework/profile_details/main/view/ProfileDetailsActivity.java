@@ -1,4 +1,4 @@
-package com.github.mrmitew.bodylog.framework.profile_details.view;
+package com.github.mrmitew.bodylog.framework.profile_details.main.view;
 
 import android.app.Application;
 import android.arch.lifecycle.ViewModelProviders;
@@ -12,16 +12,16 @@ import android.widget.TextView;
 import com.github.mrmitew.bodylog.R;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.github.mrmitew.bodylog.adapter.profile_common.intent.LoadProfileIntent;
-import com.github.mrmitew.bodylog.adapter.profile_details.model.ProfileDetailsState;
-import com.github.mrmitew.bodylog.adapter.profile_details.presenter.ProfileDetailsPresenter;
-import com.github.mrmitew.bodylog.adapter.profile_details.view.ProfileDetailsView;
+import com.github.mrmitew.bodylog.adapter.profile_details.main.model.ProfileDetailsState;
+import com.github.mrmitew.bodylog.adapter.profile_details.main.presenter.ProfileDetailsPresenter;
+import com.github.mrmitew.bodylog.adapter.profile_details.main.view.ProfileDetailsView;
 import com.github.mrmitew.bodylog.domain.repository.entity.Profile;
+import com.github.mrmitew.bodylog.framework.common.view.BasePresentableActivity;
 import com.github.mrmitew.bodylog.framework.common.view.BasePresenterHolder;
-import com.github.mrmitew.bodylog.framework.common.view.PresentableActivity;
 import com.github.mrmitew.bodylog.framework.di.activity.HasActivitySubcomponentBuilders;
 import com.github.mrmitew.bodylog.framework.di.presenter.PresenterHolderInjector;
 import com.github.mrmitew.bodylog.framework.profile_details.di.ProfileDetailsActivityComponent;
-import com.github.mrmitew.bodylog.framework.profile_edit.view.ProfileEditActivity;
+import com.github.mrmitew.bodylog.framework.profile_edit.main.view.ProfileEditActivity;
 
 import javax.inject.Inject;
 
@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 
-public class ProfileDetailsActivity extends PresentableActivity<ProfileDetailsView, ProfileDetailsState> implements ProfileDetailsView {
+public class ProfileDetailsActivity extends BasePresentableActivity<ProfileDetailsView, ProfileDetailsState> implements ProfileDetailsView {
     public static class PresenterHolder extends BasePresenterHolder<ProfileDetailsView, ProfileDetailsState> {
         @Inject
         ProfileDetailsPresenter mPresenter;
@@ -120,12 +120,12 @@ public class ProfileDetailsActivity extends PresentableActivity<ProfileDetailsVi
     }
 
     @Override
-    protected PresenterHolder injectPresenterHolder() {
+    public PresenterHolder injectPresenterHolder() {
         return ViewModelProviders.of(this).get(PresenterHolder.class);
     }
 
     @Override
-    protected ProfileDetailsView getView() {
+    public ProfileDetailsView getView() {
         return this;
     }
 

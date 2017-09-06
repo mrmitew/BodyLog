@@ -1,4 +1,4 @@
-package com.github.mrmitew.bodylog.framework.profile_edit.view;
+package com.github.mrmitew.bodylog.framework.profile_edit.main.view;
 
 import android.app.Application;
 import android.arch.lifecycle.ViewModelProviders;
@@ -15,14 +15,14 @@ import android.widget.EditText;
 import com.github.mrmitew.bodylog.R;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.github.mrmitew.bodylog.adapter.profile_common.intent.LoadProfileIntent;
-import com.github.mrmitew.bodylog.adapter.profile_edit.intent.CheckRequiredFieldsIntent;
-import com.github.mrmitew.bodylog.adapter.profile_edit.intent.SaveProfileIntent;
-import com.github.mrmitew.bodylog.adapter.profile_edit.model.ProfileEditState;
-import com.github.mrmitew.bodylog.adapter.profile_edit.presenter.ProfileEditPresenter;
-import com.github.mrmitew.bodylog.adapter.profile_edit.view.ProfileEditView;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.intent.CheckRequiredFieldsIntent;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.intent.SaveProfileIntent;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.model.ProfileEditState;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.presenter.ProfileEditPresenter;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.view.ProfileEditView;
 import com.github.mrmitew.bodylog.domain.repository.entity.Profile;
+import com.github.mrmitew.bodylog.framework.common.view.BasePresentableActivity;
 import com.github.mrmitew.bodylog.framework.common.view.BasePresenterHolder;
-import com.github.mrmitew.bodylog.framework.common.view.PresentableActivity;
 import com.github.mrmitew.bodylog.framework.di.activity.HasActivitySubcomponentBuilders;
 import com.github.mrmitew.bodylog.framework.di.presenter.PresenterHolderInjector;
 import com.github.mrmitew.bodylog.framework.profile_edit.di.ProfileEditActivityComponent;
@@ -35,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
 
-public class ProfileEditActivity extends PresentableActivity<ProfileEditView, ProfileEditState> implements ProfileEditView {
+public class ProfileEditActivity extends BasePresentableActivity<ProfileEditView, ProfileEditState> implements ProfileEditView {
     public static class PresenterHolder extends BasePresenterHolder<ProfileEditView, ProfileEditState> {
         @Inject
         ProfileEditPresenter mPresenter;
@@ -121,12 +121,12 @@ public class ProfileEditActivity extends PresentableActivity<ProfileEditView, Pr
     }
 
     @Override
-    protected ProfileEditView getView() {
+    public ProfileEditView getView() {
         return this;
     }
 
     @Override
-    protected BasePresenterHolder<ProfileEditView, ProfileEditState> injectPresenterHolder() {
+    public BasePresenterHolder<ProfileEditView, ProfileEditState> injectPresenterHolder() {
         return ViewModelProviders.of(this).get(PresenterHolder.class);
     }
 

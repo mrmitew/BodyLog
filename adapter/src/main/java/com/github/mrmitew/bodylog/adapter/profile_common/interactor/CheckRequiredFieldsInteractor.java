@@ -2,7 +2,7 @@ package com.github.mrmitew.bodylog.adapter.profile_common.interactor;
 
 import com.github.mrmitew.bodylog.adapter.common.model.ResultState;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
-import com.github.mrmitew.bodylog.adapter.profile_edit.intent.CheckRequiredFieldsIntent;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.intent.CheckRequiredFieldsIntent;
 import com.github.mrmitew.bodylog.domain.executor.PostExecutionThread;
 import com.google.auto.value.AutoValue;
 

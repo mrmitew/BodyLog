@@ -1,4 +1,4 @@
-package com.github.mrmitew.bodylog.adapter.profile_details.presenter;
+package com.github.mrmitew.bodylog.adapter.profile_details.main.presenter;
 
 import com.github.mrmitew.bodylog.adapter.common.model.ResultState;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
@@ -6,8 +6,8 @@ import com.github.mrmitew.bodylog.adapter.common.model.UIIntent;
 import com.github.mrmitew.bodylog.adapter.common.presenter.DetachableMviPresenter;
 import com.github.mrmitew.bodylog.adapter.profile_common.intent.LoadProfileIntent;
 import com.github.mrmitew.bodylog.adapter.profile_common.interactor.LoadProfileInteractor;
-import com.github.mrmitew.bodylog.adapter.profile_details.model.ProfileDetailsState;
-import com.github.mrmitew.bodylog.adapter.profile_details.view.ProfileDetailsView;
+import com.github.mrmitew.bodylog.adapter.profile_details.main.model.ProfileDetailsState;
+import com.github.mrmitew.bodylog.adapter.profile_details.main.view.ProfileDetailsView;
 import com.jakewharton.rxrelay2.BehaviorRelay;
 
 import javax.inject.Inject;

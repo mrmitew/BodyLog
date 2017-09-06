@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.github.mrmitew.bodylog.adapter.common.view.BaseView;
 
-public abstract class PresentableActivity<V extends BaseView<S>, S> extends BaseActivity {
+public abstract class BasePresentableActivity<V extends BaseView<S>, S> extends BaseActivity implements Presentable<V, S> {
     protected BasePresenterHolder<V, S> mPresenterHolder;
 
     @Override
@@ -12,10 +12,6 @@ public abstract class PresentableActivity<V extends BaseView<S>, S> extends Base
         super.onCreate(savedInstanceState);
         setPresenterHolder();
     }
-
-    protected abstract V getView();
-
-    protected abstract BasePresenterHolder<V, S> injectPresenterHolder();
 
     private void setPresenterHolder() {
         mPresenterHolder = injectPresenterHolder();

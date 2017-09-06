@@ -1,4 +1,4 @@
-package com.github.mrmitew.bodylog.adapter.profile_details.model;
+package com.github.mrmitew.bodylog.adapter.profile_details.main.model;
 
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.github.mrmitew.bodylog.domain.repository.entity.Profile;
