@@ -1,8 +1,8 @@
 # Bodylog
 
-The main goal of this (WIP) project is to demonstrate an implementation of the Model-View-Intent (MVI) design pattern
+The main goal of this (WIP) project is to demonstrate an implementation of the Model-View-Intent (MVI) design pattern, which aims at having a unidirectional data flow where application state is driven by the business logic.
 
-The project follows the "clean" approach for architecting apps and is composed several modules (both Android and pure java), namely:
+The project follows the "clean" approach for architecting apps and is composed of several modules (both Android and pure java), namely:
 - framework (UI)
 - data (Repository)
 - adapter (UI presentation)
@@ -26,14 +26,14 @@ In order to preserve _Presenter(s)_ in memory during orientation change, they ar
 - RxJava2
 - RxAndroid
 - RxRelay2
-- Lifecycle (for Android's ViewModel)
+- Lifecycle _(for Android's ViewModel)_
 
 ### Others
-- Dagger (dependency injection)
-- AutoValue (immutability)
+- Dagger _(dependency injection)_
+- AutoValue _(immutability)_
 
 ### Debugging & Inspecting
-- LeakCanary
+- LeakCanary _(finding memory leaks)_
 
 ### Testing
 - JUnit
