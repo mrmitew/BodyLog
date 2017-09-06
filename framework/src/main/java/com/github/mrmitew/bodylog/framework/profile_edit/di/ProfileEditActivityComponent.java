@@ -2,13 +2,13 @@ package com.github.mrmitew.bodylog.framework.profile_edit.di;
 
 import com.github.mrmitew.bodylog.adapter.profile_common.interactor.CheckRequiredFieldsInteractor;
 import com.github.mrmitew.bodylog.adapter.profile_common.interactor.LoadProfileInteractor;
-import com.github.mrmitew.bodylog.adapter.profile_edit.interactor.SaveProfileInteractor;
-import com.github.mrmitew.bodylog.adapter.profile_edit.presenter.ProfileEditPresenter;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.interactor.SaveProfileInteractor;
+import com.github.mrmitew.bodylog.adapter.profile_edit.main.presenter.ProfileEditPresenter;
 import com.github.mrmitew.bodylog.framework.di.activity.ActivityComponent;
 import com.github.mrmitew.bodylog.framework.di.activity.ActivityComponentBuilder;
 import com.github.mrmitew.bodylog.framework.di.activity.ActivityModule;
 import com.github.mrmitew.bodylog.framework.di.activity.ActivityScope;
-import com.github.mrmitew.bodylog.framework.profile_edit.view.ProfileEditActivity;
+import com.github.mrmitew.bodylog.framework.profile_edit.main.view.ProfileEditActivity;
 import com.jakewharton.rxrelay2.BehaviorRelay;
 
 import javax.inject.Singleton;

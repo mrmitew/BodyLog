@@ -1,14 +1,17 @@
 package com.github.mrmitew.bodylog.framework.profile_details.di;
 
+import com.github.mrmitew.bodylog.adapter.common.model.ResultState;
 import com.github.mrmitew.bodylog.adapter.profile_common.interactor.LoadProfileInteractor;
-import com.github.mrmitew.bodylog.adapter.profile_details.presenter.ProfileDetailsPresenter;
+import com.github.mrmitew.bodylog.adapter.profile_details.last_updated.presenter.LastUpdatedPresenter;
+import com.github.mrmitew.bodylog.adapter.profile_details.main.presenter.ProfileDetailsPresenter;
 import com.github.mrmitew.bodylog.framework.di.activity.ActivityComponent;
 import com.github.mrmitew.bodylog.framework.di.activity.ActivityComponentBuilder;
 import com.github.mrmitew.bodylog.framework.di.activity.ActivityModule;
 import com.github.mrmitew.bodylog.framework.di.activity.ActivityScope;
-import com.github.mrmitew.bodylog.framework.profile_details.view.ProfileDetailsActivity;
+import com.github.mrmitew.bodylog.framework.profile_details.main.view.ProfileDetailsActivity;
 import com.jakewharton.rxrelay2.BehaviorRelay;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -26,8 +29,19 @@ public interface ProfileDetailsActivityComponent extends ActivityComponent<Profi
     @Module
     class PresenterModule {
         @Provides
-        ProfileDetailsPresenter providesProfileDetailsPresenter(LoadProfileInteractor loadProfileInteractor) {
-            return new ProfileDetailsPresenter(loadProfileInteractor, BehaviorRelay.create());
+        @Named("loadProfileInteractorRelay")
+        BehaviorRelay<ResultState> providesLoadProfileInteractorRelay() {
+            return BehaviorRelay.create();
+        }
+
+        @Provides
+        ProfileDetailsPresenter providesProfileDetailsPresenter(LoadProfileInteractor loadProfileInteractor, @Named("loadProfileInteractorRelay") BehaviorRelay<ResultState> resultStateBehaviorRelay) {
+            return new ProfileDetailsPresenter(loadProfileInteractor, resultStateBehaviorRelay);
+        }
+
+        @Provides
+        LastUpdatedPresenter providesLastUpdatedPresenter(LoadProfileInteractor loadProfileInteractor, @Named("loadProfileInteractorRelay") BehaviorRelay<ResultState> resultStateBehaviorRelay) {
+            return new LastUpdatedPresenter(loadProfileInteractor, resultStateBehaviorRelay);
         }
     }
 

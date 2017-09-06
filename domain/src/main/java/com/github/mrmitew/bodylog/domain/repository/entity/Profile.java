@@ -16,6 +16,8 @@ public abstract class Profile {
             .waistSize(0)
             .build();
 
+    public abstract long timestamp();
+
     public abstract boolean empty();
 
     public abstract String name();
@@ -37,11 +39,14 @@ public abstract class Profile {
     public static Builder builder() {
         final AutoValue_Profile.Builder builder = new AutoValue_Profile.Builder();
         builder.empty(false);
+        builder.timestamp(System.currentTimeMillis());
         return builder;
     }
 
     @AutoValue.Builder
     public abstract static class Builder {
+        abstract Builder timestamp(final long newTimestamp);
+
         public abstract Builder empty(final boolean newEmpty);
 
         public abstract Builder name(final String newName);

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".framework.profile_details.view.ProfileDetailsActivity">
+    tools:context=".framework.profile_details.main.view.ProfileDetailsActivity">
 
     <FrameLayout
         android:id="@+id/vg_state_loading"
