@@ -1,8 +1,8 @@
 # Bodylog
 
-The main goal of this (WIP) project is to demonstrate an implementation of the Model-View-Intent (MVI) design pattern
+The main goal of this (WIP) project is to demonstrate an implementation of the Model-View-Intent (MVI) design pattern, which aims at having a unidirectional data flow where application state is driven by the business logic.
 
-The project follows the "clean" approach for architecting apps and is composed several modules (both Android and pure java), namely:
+The project follows the "clean" approach for architecting apps and is composed of several modules (both Android and pure java), namely:
 - framework (UI)
 - data (Repository)
 - adapter (UI presentation)
@@ -14,7 +14,7 @@ Internally, Presenters create **_PublishRelay_**, which subscribes to the stream
 
 In addition, presenters create **_BehaviourRelay_**_(s)_ that work as a gateway from business logic to _View_. While a _View_ is detached from a _Presenter_, say we navigate forward from Activity A to Activity B, the presenter of Activity A will be still alive and can receive updates from the business logic. When we navigate back and _View_ reataches to _Presenter_, the _BehaviourRelay_ will replay the cached model update and _View_ will update accordingly.
 
-In order to preserve _Presenter(s)_ in memory during orientation change, they are injected into a **_PresenterHolder_** that extends from Android's _ViewModel_ (https://developer.android.com/topic/libraries/architecture/viewmodel.html). Throughout the lifecycle of an activity/fragment, _View_(s) get detached and reatached to _Presenter_(s), so no memory leaks would occur.
+In order to preserve _Presenter(s)_ in memory during orientation change, they are injected into a **_PresenterHolder_** that extends from Android's _ViewModel_ (https://developer.android.com/topic/libraries/architecture/viewmodel.html). Throughout the lifecycle of an activity/fragment, _View_(s) get detached and reatached to _Presenter_(s), so no memory leaks would occur. When an _Activity_ or _Fragment_ gets finally destroyed (not due to orientation change), _Presenter_ is also destroyed.
 
 ## Libraries used in this project
 
@@ -26,14 +26,14 @@ In order to preserve _Presenter(s)_ in memory during orientation change, they ar
 - RxJava2
 - RxAndroid
 - RxRelay2
-- Lifecycle (for Android's ViewModel)
+- Lifecycle _(for Android's ViewModel)_
 
 ### Others
-- Dagger (dependency injection)
-- AutoValue (immutability)
+- Dagger _(dependency injection)_
+- AutoValue _(immutability)_
 
 ### Debugging & Inspecting
-- LeakCanary
+- LeakCanary _(finding memory leaks)_
 
 ### Testing
 - JUnit
