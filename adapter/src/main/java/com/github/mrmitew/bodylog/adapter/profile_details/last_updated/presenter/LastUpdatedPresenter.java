@@ -11,16 +11,11 @@ import com.github.mrmitew.bodylog.adapter.profile_details.last_updated.model.Las
 import com.github.mrmitew.bodylog.adapter.profile_details.last_updated.view.LastUpdatedView;
 import com.jakewharton.rxrelay2.BehaviorRelay;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 
 public class LastUpdatedPresenter extends DetachableMviPresenter<LastUpdatedView, LastUpdatedTextState> {
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);
-
     //
     // Interactors
     //
@@ -85,7 +80,7 @@ public class LastUpdatedPresenter extends DetachableMviPresenter<LastUpdatedView
                 return previousState;
             } else if (resultState.isSuccessful()) {
                 return previousState.toBuilder()
-                        .lastUpdated(DATE_FORMAT.format(((LoadProfileInteractor.State) resultState).profile().timestamp()))
+                        .lastUpdated(LastUpdatedTextState.DATE_FORMAT.format(((LoadProfileInteractor.State) resultState).profile().timestamp()))
                         .error(StateError.Empty.INSTANCE)
                         .build();
             } else if (!(resultState.error() instanceof StateError.Empty)) {

@@ -3,8 +3,12 @@ package com.github.mrmitew.bodylog.adapter.profile_details.last_updated.model;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.google.auto.value.AutoValue;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 @AutoValue
 public abstract class LastUpdatedTextState {
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);
     public static final String EMPTY = "n/a";
 
     public static class Factory {
@@ -17,8 +21,7 @@ public abstract class LastUpdatedTextState {
 
         public static LastUpdatedTextState success(long time) {
             return builder().
-                    // TODO: Use a date formatter
-                            lastUpdated(String.valueOf(time))
+                    lastUpdated(DATE_FORMAT.format(time))
                     .error(StateError.Empty.INSTANCE)
                     .build();
         }
