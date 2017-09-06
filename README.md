@@ -14,7 +14,7 @@ Internally, Presenters create **_PublishRelay_**, which subscribes to the stream
 
 In addition, presenters create **_BehaviourRelay_**_(s)_ that work as a gateway from business logic to _View_. While a _View_ is detached from a _Presenter_, say we navigate forward from Activity A to Activity B, the presenter of Activity A will be still alive and can receive updates from the business logic. When we navigate back and _View_ reataches to _Presenter_, the _BehaviourRelay_ will replay the cached model update and _View_ will update accordingly.
 
-In order to preserve _Presenter(s)_ in memory during orientation change, they are injected into a **_PresenterHolder_** that extends from Android's _ViewModel_ (https://developer.android.com/topic/libraries/architecture/viewmodel.html). Throughout the lifecycle of an activity/fragment, _View_(s) get detached and reatached to _Presenter_(s), so no memory leaks would occur. When an _Activity_ or _Fragment_ gets finally destroyed (not due to orientation change), _Presenter_ is also destroyed.
+In order to preserve a _Presenter_ in memory during orientation change, it is injected into a **_PresenterHolder_** which extends from Android's _ViewModel_ (https://developer.android.com/topic/libraries/architecture/viewmodel.html). Throughout the lifecycle of an activity/fragment, _View_(s) get detached and reatached to _Presenter_(s), so no memory leaks would occur. When an _Activity_ or _Fragment_ gets finally destroyed (not due to orientation change), _Presenter_ is also destroyed, since the hosting _ViewModel (PresenterHolder)_ gets garbage collected.
 
 ## Libraries used in this project
 
