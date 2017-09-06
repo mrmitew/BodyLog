@@ -3,8 +3,9 @@ package com.github.mrmitew.bodylog.framework.common.view;
 import android.os.Bundle;
 
 import com.github.mrmitew.bodylog.adapter.common.view.BaseView;
+import com.github.mrmitew.bodylog.framework.common.presenter.BasePresenterHolder;
 
-public abstract class BasePresentableActivity<V extends BaseView<S>, S> extends BaseActivity implements Presentable<V, S> {
+public abstract class BasePresentableActivity<V extends BaseView<S>, S> extends InjectableActivity implements Presentable<V, S> {
     protected BasePresenterHolder<V, S> mPresenterHolder;
 
     @Override

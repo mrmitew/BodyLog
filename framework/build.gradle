@@ -130,19 +130,13 @@ dependencies {
     // Auth
 
     // Storage
-    implementation "com.scottyab:secure-preferences-lib:$versions.securePrefs"
-    implementation "com.pixplicity.easyprefs:library:$versions.easyPrefs"
 
     // HTTP
 
     // Others
     implementation "com.google.dagger:dagger:$versions.dagger"
     annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
-    implementation "frankiesardo:icepick:$versions.icePick"
-    annotationProcessor "frankiesardo:icepick-processor:$versions.icePick"
     annotationProcessor "com.google.auto.value:auto-value:$versions.autoValue"
-    provided "com.jakewharton.auto.value:auto-value-annotations:$versions.autoValueAnnotations"
-    implementation "com.google.code.gson:gson:$versions.gson"
 
     // Debugging & Inspecting
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"

@@ -1,4 +1,4 @@
-package com.github.mrmitew.bodylog.framework.common.view;
+package com.github.mrmitew.bodylog.framework.common.viewmodel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

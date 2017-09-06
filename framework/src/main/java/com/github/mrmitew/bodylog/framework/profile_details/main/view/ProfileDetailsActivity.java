@@ -16,8 +16,8 @@ import com.github.mrmitew.bodylog.adapter.profile_details.main.model.ProfileDeta
 import com.github.mrmitew.bodylog.adapter.profile_details.main.presenter.ProfileDetailsPresenter;
 import com.github.mrmitew.bodylog.adapter.profile_details.main.view.ProfileDetailsView;
 import com.github.mrmitew.bodylog.domain.repository.entity.Profile;
+import com.github.mrmitew.bodylog.framework.common.presenter.BasePresenterHolder;
 import com.github.mrmitew.bodylog.framework.common.view.BasePresentableActivity;
-import com.github.mrmitew.bodylog.framework.common.view.BasePresenterHolder;
 import com.github.mrmitew.bodylog.framework.di.activity.HasActivitySubcomponentBuilders;
 import com.github.mrmitew.bodylog.framework.di.presenter.PresenterHolderInjector;
 import com.github.mrmitew.bodylog.framework.profile_details.di.ProfileDetailsActivityComponent;

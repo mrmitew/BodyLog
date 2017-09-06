@@ -53,9 +53,6 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
     annotationProcessor "com.google.auto.value:auto-value:$versions.autoValue"
     provided "com.jakewharton.auto.value:auto-value-annotations:$versions.autoValueAnnotations"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$versions.autoValueGson"
-    provided "com.ryanharter.auto.value:auto-value-gson:$versions.autoValueGson"
-    implementation "com.google.code.gson:gson:$versions.gson"
 
     // Debugging & Inspecting
 

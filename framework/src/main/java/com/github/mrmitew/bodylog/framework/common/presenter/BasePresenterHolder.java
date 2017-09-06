@@ -1,4 +1,4 @@
-package com.github.mrmitew.bodylog.framework.common.view;
+package com.github.mrmitew.bodylog.framework.common.presenter;
 
 import android.app.Application;
 
@@ -6,6 +6,7 @@ import com.github.mrmitew.bodylog.adapter.common.presenter.Bindable;
 import com.github.mrmitew.bodylog.adapter.common.presenter.DetachableMviPresenter;
 import com.github.mrmitew.bodylog.adapter.common.presenter.HasDetachableView;
 import com.github.mrmitew.bodylog.adapter.common.view.BaseView;
+import com.github.mrmitew.bodylog.framework.common.viewmodel.InjectableViewModel;
 
 public abstract class BasePresenterHolder<V extends BaseView<S>, S> extends InjectableViewModel implements Bindable, HasDetachableView<V> {
     public BasePresenterHolder(final Application application) {

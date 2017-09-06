@@ -12,8 +12,8 @@ import com.github.mrmitew.bodylog.adapter.profile_details.last_updated.intent.Ge
 import com.github.mrmitew.bodylog.adapter.profile_details.last_updated.model.LastUpdatedTextState;
 import com.github.mrmitew.bodylog.adapter.profile_details.last_updated.presenter.LastUpdatedPresenter;
 import com.github.mrmitew.bodylog.adapter.profile_details.last_updated.view.LastUpdatedView;
+import com.github.mrmitew.bodylog.framework.common.presenter.BasePresenterHolder;
 import com.github.mrmitew.bodylog.framework.common.view.BasePresentableTextView;
-import com.github.mrmitew.bodylog.framework.common.view.BasePresenterHolder;
 import com.github.mrmitew.bodylog.framework.di.presenter.PresenterHolderInjector;
 
 import javax.inject.Inject;

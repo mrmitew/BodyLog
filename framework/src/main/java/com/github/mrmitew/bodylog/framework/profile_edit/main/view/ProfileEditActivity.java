@@ -21,8 +21,8 @@ import com.github.mrmitew.bodylog.adapter.profile_edit.main.model.ProfileEditSta
 import com.github.mrmitew.bodylog.adapter.profile_edit.main.presenter.ProfileEditPresenter;
 import com.github.mrmitew.bodylog.adapter.profile_edit.main.view.ProfileEditView;
 import com.github.mrmitew.bodylog.domain.repository.entity.Profile;
+import com.github.mrmitew.bodylog.framework.common.presenter.BasePresenterHolder;
 import com.github.mrmitew.bodylog.framework.common.view.BasePresentableActivity;
-import com.github.mrmitew.bodylog.framework.common.view.BasePresenterHolder;
 import com.github.mrmitew.bodylog.framework.di.activity.HasActivitySubcomponentBuilders;
 import com.github.mrmitew.bodylog.framework.di.presenter.PresenterHolderInjector;
 import com.github.mrmitew.bodylog.framework.profile_edit.di.ProfileEditActivityComponent;
