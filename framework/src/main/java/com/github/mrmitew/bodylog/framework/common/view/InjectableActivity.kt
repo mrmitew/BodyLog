@@ -15,6 +15,6 @@ abstract class InjectableActivity : AppCompatActivity() {
     protected abstract fun injectMembers(hasActivitySubcomponentBuilders: HasActivitySubcomponentBuilders)
 
     private fun setupActivityComponent() {
-        injectMembers(AndroidApplication.get(this))
+        injectMembers(AndroidApplication.getActivitySubcomponentBuilders(this))
     }
 }

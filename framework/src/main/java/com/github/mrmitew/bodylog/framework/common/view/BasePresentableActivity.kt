@@ -20,12 +20,11 @@ abstract class BasePresentableActivity<V : BaseView<S>, S : UiState> : Injectabl
 
     override fun onStart() {
         super.onStart()
-        presenterHolder.attachView(view)
-        presenterHolder.bindIntents()
+        presenterHolder.onAttachedToWindow(view)
     }
 
     override fun onStop() {
         super.onStop()
-        presenterHolder.detachView()
+        presenterHolder.onDetachedFromWindow()
     }
 }

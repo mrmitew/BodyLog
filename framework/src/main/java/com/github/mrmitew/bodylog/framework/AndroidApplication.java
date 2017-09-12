@@ -25,7 +25,7 @@ public class AndroidApplication extends Application implements HasActivitySubcom
 
     private ApplicationComponent mApplicationComponent;
 
-    public static HasActivitySubcomponentBuilders get(Context context) {
+    public static HasActivitySubcomponentBuilders getActivitySubcomponentBuilders(Context context) {
         return ((HasActivitySubcomponentBuilders) context.getApplicationContext());
     }
 

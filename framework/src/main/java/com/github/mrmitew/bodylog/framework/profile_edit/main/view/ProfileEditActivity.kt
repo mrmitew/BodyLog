@@ -31,8 +31,8 @@ class ProfileEditActivity : BasePresentableActivity<ProfileEditView, ProfileEdit
     class PresenterHolder(application: Application) : BasePresenterHolder<ProfileEditView, ProfileEditState>(application) {
         @Inject override lateinit var presenter: ProfileEditPresenter
 
-        override fun injectMembers(injector: PresenterHolderInjector?) {
-            injector?.inject(this)
+        override fun injectMembers(injector: PresenterHolderInjector) {
+            injector.inject(this)
         }
     }
 

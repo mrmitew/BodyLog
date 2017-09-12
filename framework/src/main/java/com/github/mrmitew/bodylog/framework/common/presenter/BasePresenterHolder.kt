@@ -15,7 +15,16 @@ abstract class BasePresenterHolder<V : BaseView<S>, S : UiState>(application: Ap
 
     override fun onCleared() {
         super.onCleared()
+        onDetachedFromWindow()
+    }
+
+    fun onAttachedToWindow(view: V) {
+        attachView(view)
+    }
+
+    fun onDetachedFromWindow() {
         detachView()
+        unbindIntents()
     }
 
     override fun attachView(view: V) {
