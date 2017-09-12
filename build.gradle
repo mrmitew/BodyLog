@@ -70,7 +70,7 @@ ext.versions = [
         playServices        : '11.0.4',
         retrolambda         : '3.7.0',
         javaApt             : '0.5',
-        dagger              : '2.10-rc4',
+        dagger              : '2.11',
         gson                : '2.8.1',
         autoValue           : '1.4.1',
         autoValueAnnotations: '1.4',

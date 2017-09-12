@@ -13,7 +13,7 @@ abstract class InjectableViewModel(application: Application) : AndroidViewModel(
     }
 
     private fun setupActivityComponent() =
-        injectMembers((getApplication<Application>() as AndroidApplication).presenterHolderInjector)
+        injectMembers(AndroidApplication.getPresenterHolderInjector(getApplication()))
 
     protected abstract fun injectMembers(injector: PresenterHolderInjector)
 }
