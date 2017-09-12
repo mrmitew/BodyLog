@@ -45,7 +45,7 @@ public class LastUpdatedPresenter extends DetachableMviPresenter<LastUpdatedView
     @Inject
     public LastUpdatedPresenter(final LoadProfileInteractor loadProfileInteractor,
                                 final BehaviorRelay<ResultState> profileResultStateRelay) {
-        super(null);
+        super(new LastUpdatedView.Empty());
         mLoadProfileInteractor = loadProfileInteractor;
         mProfileResultStateRelay = profileResultStateRelay;
     }

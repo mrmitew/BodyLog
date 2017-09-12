@@ -60,7 +60,7 @@ public class ProfileEditPresenter extends DetachableMviPresenter<ProfileEditView
                                 final CheckRequiredFieldsInteractor checkRequiredFieldsInteractor,
                                 final SaveProfileInteractor saveProfileInteractor,
                                 final BehaviorRelay<ResultState> profileResultStateRelay) {
-        super(null);
+        super(new ProfileEditView.Empty());
         mLoadProfileInteractor = loadProfileInteractor;
         mCheckRequiredFieldsInteractor = checkRequiredFieldsInteractor;
         mSaveProfileInteractor = saveProfileInteractor;

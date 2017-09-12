@@ -9,6 +9,7 @@ repositories {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 androidGitVersion {
@@ -129,6 +130,7 @@ dependencies {
 
     // Others
     implementation "com.google.dagger:dagger:$versions.dagger"
+    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
     annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
     annotationProcessor "com.google.auto.value:auto-value:$versions.autoValue"
 

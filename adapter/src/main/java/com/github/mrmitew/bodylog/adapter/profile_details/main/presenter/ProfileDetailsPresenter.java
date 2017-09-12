@@ -44,7 +44,7 @@ public class ProfileDetailsPresenter extends DetachableMviPresenter<ProfileDetai
     @Inject
     public ProfileDetailsPresenter(final LoadProfileInteractor loadProfileInteractor,
                                    final BehaviorRelay<ResultState> profileResultStateRelay) {
-        super(null);
+        super(new ProfileDetailsView.Empty());
         mLoadProfileInteractor = loadProfileInteractor;
         mProfileResultStateRelay = profileResultStateRelay;
     }
