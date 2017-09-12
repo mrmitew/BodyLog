@@ -53,19 +53,19 @@ class ProfileDetailsActivity : BasePresentableActivity<ProfileDetailsView, Profi
     }
 
     override fun render(state: ProfileDetailsState) {
-        val hasError = state.loadError() !is StateError.Empty
+        val hasError = state.loadError !is StateError.Empty
 
         // Inflate the layout with the content from the state
-        inflate(state.profile())
+        inflate(state.profile)
 
         if (hasError) {
             // TODO: 9/5/17 Give feedback to the user
-            println("render: (hasError) " + state.loadError())
+            println("render: (hasError) " + state.loadError)
         }
 
         // Layout visibility
-        vg_state_loading.visibility = if (state.inProgress()) View.VISIBLE else View.GONE
-        vg_state_no_result.visibility = if (state.loadSuccessful()) View.GONE else View.VISIBLE
+        vg_state_loading.visibility = if (state.inProgress) View.VISIBLE else View.GONE
+        vg_state_no_result.visibility = if (state.loadSuccessful) View.GONE else View.VISIBLE
         vg_state_error.visibility = if (hasError) View.VISIBLE else View.GONE
     }
 
