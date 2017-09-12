@@ -77,13 +77,13 @@ public class ProfileDetailsPresenter extends DetachableMviPresenter<ProfileDetai
                 return previousState.toBuilder()
                         .inProgress(false)
                         .loadSuccessful(true)
-                        .profile(((LoadProfileInteractor.State) resultState).profile())
+                        .profile(((LoadProfileInteractor.State) resultState).getProfile())
                         .build();
-            } else if (!(resultState.error() instanceof StateError.Empty)) {
+            } else if (!(resultState.getError() instanceof StateError.Empty)) {
                 return previousState.toBuilder()
                         .inProgress(false)
                         .loadSuccessful(false)
-                        .loadError(resultState.error())
+                        .loadError(resultState.getError())
                         .build();
             }
         }

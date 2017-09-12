@@ -4,6 +4,8 @@ import com.github.mrmitew.bodylog.domain.repository.Repository;
 import com.github.mrmitew.bodylog.domain.repository.entity.Profile;
 import com.jakewharton.rxrelay2.BehaviorRelay;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
@@ -28,6 +30,7 @@ public class ProfileRepository implements Repository {
     }
 
     @Override
+    @NotNull
     public Observable<Profile> getProfile() {
         return Observable.just(sCachedProfile)
                 // Simulate a long process
@@ -35,6 +38,7 @@ public class ProfileRepository implements Repository {
     }
 
     @Override
+    @NotNull
     public Observable<Profile> getProfileRefreshing() {
         return mProfileBehaviorRelay.startWith(sCachedProfile)
                 // Simulate a long process
@@ -42,7 +46,8 @@ public class ProfileRepository implements Repository {
     }
 
     @Override
-    public Completable setProfile(final Profile profile) {
+    @NotNull
+    public Completable setProfile(@NotNull final Profile profile) {
         return Completable.fromAction(() -> sCachedProfile = profile)
                 .doOnComplete(() -> mProfileBehaviorRelay.accept(profile));
     }

@@ -80,13 +80,13 @@ public class LastUpdatedPresenter extends DetachableMviPresenter<LastUpdatedView
                 return previousState;
             } else if (resultState.isSuccessful()) {
                 return previousState.toBuilder()
-                        .lastUpdated(LastUpdatedTextState.DATE_FORMAT.format(((LoadProfileInteractor.State) resultState).profile().timestamp()))
+                        .lastUpdated(LastUpdatedTextState.DATE_FORMAT.format(((LoadProfileInteractor.State) resultState).getProfile().timestamp()))
                         .error(StateError.Empty.Companion.getINSTANCE())
                         .build();
-            } else if (!(resultState.error() instanceof StateError.Empty)) {
+            } else if (!(resultState.getError() instanceof StateError.Empty)) {
                 return previousState.toBuilder()
                         .lastUpdated(LastUpdatedTextState.EMPTY)
-                        .error(resultState.error())
+                        .error(resultState.getError())
                         .build();
             }
         }

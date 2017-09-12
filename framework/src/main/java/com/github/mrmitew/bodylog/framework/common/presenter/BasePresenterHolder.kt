@@ -20,6 +20,7 @@ abstract class BasePresenterHolder<V : BaseView<S>, S : UiState>(application: Ap
 
     fun onAttachedToWindow(view: V) {
         attachView(view)
+        bindIntents()
     }
 
     fun onDetachedFromWindow() {

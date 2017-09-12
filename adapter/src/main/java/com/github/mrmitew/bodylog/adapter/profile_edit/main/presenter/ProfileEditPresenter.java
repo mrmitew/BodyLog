@@ -108,13 +108,13 @@ public class ProfileEditPresenter extends DetachableMviPresenter<ProfileEditView
                 return previousState.toBuilder()
                         .setInProgress(false)
                         .setLoadSuccessful(true)
-                        .setProfile(((LoadProfileInteractor.State) resultState).profile())
+                        .setProfile(((LoadProfileInteractor.State) resultState).getProfile())
                         .build();
-            } else if (!(resultState.error() instanceof StateError.Empty)) {
+            } else if (!(resultState.getError() instanceof StateError.Empty)) {
                 return previousState.toBuilder()
                         .setInProgress(false)
                         .setLoadSuccessful(false)
-                        .setLoadError(resultState.error())
+                        .setLoadError(resultState.getError())
                         .build();
             }
         } else if (resultState instanceof SaveProfileInteractor.State) {
@@ -129,11 +129,11 @@ public class ProfileEditPresenter extends DetachableMviPresenter<ProfileEditView
                         .setInProgress(false)
                         .setSaveSuccessful(true)
                         .build();
-            } else if (!(resultState.error() instanceof StateError.Empty)) {
+            } else if (!(resultState.getError() instanceof StateError.Empty)) {
                 return previousState.toBuilder()
                         .setInProgress(false)
                         .setSaveSuccessful(false)
-                        .setSaveError(resultState.error())
+                        .setSaveError(resultState.getError())
                         .build();
             }
         } else if (resultState instanceof CheckRequiredFieldsInteractor.State) {
@@ -142,10 +142,10 @@ public class ProfileEditPresenter extends DetachableMviPresenter<ProfileEditView
                         .setRequiredFieldsFilledIn(true)
                         .setRequiredFieldsError(StateError.Empty.Companion.getINSTANCE())
                         .build();
-            } else if (!(resultState.error() instanceof StateError.Empty)) {
+            } else if (!(resultState.getError() instanceof StateError.Empty)) {
                 return previousState.toBuilder()
                         .setRequiredFieldsFilledIn(false)
-                        .setRequiredFieldsError(resultState.error())
+                        .setRequiredFieldsError(resultState.getError())
                         .build();
             }
         }
