@@ -4,11 +4,12 @@ import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
+import com.github.mrmitew.bodylog.adapter.common.UiState;
 import com.github.mrmitew.bodylog.adapter.common.view.BaseView;
 import com.github.mrmitew.bodylog.framework.common.presenter.BasePresenterHolder;
 
 
-public abstract class BasePresentableTextView<V extends BaseView<S>, S> extends AppCompatTextView implements Presentable<V, S> {
+public abstract class BasePresentableTextView<V extends BaseView<S>, S extends UiState> extends AppCompatTextView implements Presentable<V, S> {
     private BasePresenterHolder<V, S> mPresenterHolder;
 
     public BasePresentableTextView(final Context context) {

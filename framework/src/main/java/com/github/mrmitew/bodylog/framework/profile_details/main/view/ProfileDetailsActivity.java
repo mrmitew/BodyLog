@@ -3,6 +3,7 @@ package com.github.mrmitew.bodylog.framework.profile_details.main.view;
 import android.app.Application;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class ProfileDetailsActivity extends BasePresentableActivity<ProfileDetai
         }
 
         @Override
+        @NonNull
         public ProfileDetailsPresenter getPresenter() {
             return mPresenter;
         }
@@ -112,7 +114,7 @@ public class ProfileDetailsActivity extends BasePresentableActivity<ProfileDetai
     }
 
     @Override
-    protected void injectMembers(final HasActivitySubcomponentBuilders hasActivitySubcomponentBuilders) {
+    protected void injectMembers(@NonNull final HasActivitySubcomponentBuilders hasActivitySubcomponentBuilders) {
         ((ProfileDetailsActivityComponent.Builder) hasActivitySubcomponentBuilders.getActivityComponentBuilder(ProfileDetailsActivity.class))
                 .activityModule(new ProfileDetailsActivityComponent.ProfileDetailsActivityModule(this))
                 .build()
@@ -120,17 +122,19 @@ public class ProfileDetailsActivity extends BasePresentableActivity<ProfileDetai
     }
 
     @Override
+    @NonNull
     public PresenterHolder injectPresenterHolder() {
         return ViewModelProviders.of(this).get(PresenterHolder.class);
     }
 
     @Override
+    @NonNull
     public ProfileDetailsView getView() {
         return this;
     }
 
     @Override
-    public void render(final ProfileDetailsState state) {
+    public void render(@NonNull final ProfileDetailsState state) {
         final boolean hasError = !(state.loadError() instanceof StateError.Empty);
 
         // Inflate the layout with the content from the state

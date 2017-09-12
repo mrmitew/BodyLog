@@ -52,7 +52,7 @@ public class ProfileDetailsPresenter extends DetachableMviPresenter<ProfileDetai
     @Override
     protected void bindInternalIntents() {
         super.bindInternalIntents();
-        mModelGateways.add(Observable.just(new LoadProfileIntent())
+        getModelGateways().add(Observable.just(new LoadProfileIntent())
                 .compose(mLoadProfileInteractor)
                 .doOnNext(state -> System.out.println(String.format("[DETAILS] [PROFILE MODEL] (%s) : %s", state.hashCode(), state)))
                 .subscribe(mProfileResultStateRelay));
@@ -92,13 +92,13 @@ public class ProfileDetailsPresenter extends DetachableMviPresenter<ProfileDetai
     }
 
     @Override
-    protected ProfileDetailsState getInitialState() {
+    protected ProfileDetailsState initialState() {
         return ProfileDetailsState.Factory.inProgress();
     }
 
     @Override
-    protected Observable<UIIntent> getViewIntents() {
-        return mView.getLoadProfileIntent()
-                .cast(UIIntent.class);
+    protected Observable<UIIntent> viewIntents() {
+        return getView() != null ? getView().getLoadProfileIntent()
+                .cast(UIIntent.class) : Observable.empty();
     }
 }

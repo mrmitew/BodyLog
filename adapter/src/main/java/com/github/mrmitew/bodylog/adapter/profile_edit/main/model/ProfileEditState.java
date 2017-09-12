@@ -1,11 +1,12 @@
 package com.github.mrmitew.bodylog.adapter.profile_edit.main.model;
 
+import com.github.mrmitew.bodylog.adapter.common.UiState;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.github.mrmitew.bodylog.domain.repository.entity.Profile;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class ProfileEditState {
+public abstract class ProfileEditState extends UiState {
     public static class DefaultStateFactories {
         public static ProfileEditState idle() {
             return builder()

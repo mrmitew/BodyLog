@@ -68,16 +68,17 @@ public class ProfileEditPresenter extends DetachableMviPresenter<ProfileEditView
     }
 
     @Override
-    protected Observable<UIIntent> getViewIntents() {
-        return Observable.merge(mView.getRequiredFieldsFilledInIntent(),
-                mView.getSaveIntent(),
-                mView.getLoadProfileIntent());
+    protected Observable<UIIntent> viewIntents() {
+        final ProfileEditView view = getView();
+        return view != null ? Observable.merge(view.getRequiredFieldsFilledInIntent(),
+                view.getSaveIntent(),
+                view.getLoadProfileIntent()) : Observable.empty();
     }
 
     @Override
     protected void bindInternalIntents() {
         super.bindInternalIntents();
-        mModelGateways.add(Observable.just(new LoadProfileIntent())
+        getModelGateways().add(Observable.just(new LoadProfileIntent())
                 .compose(mLoadProfileInteractor)
                 .doOnNext(state -> System.out.println(String.format("[EDIT] [PROFILE MODEL] (%s) : %s", state.hashCode(), state)))
                 .subscribe(mProfileResultStateRelay));
@@ -153,7 +154,7 @@ public class ProfileEditPresenter extends DetachableMviPresenter<ProfileEditView
     }
 
     @Override
-    protected ProfileEditState getInitialState() {
+    protected ProfileEditState initialState() {
         return ProfileEditState.DefaultStateFactories.idle();
     }
 }

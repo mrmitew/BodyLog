@@ -1,5 +1,6 @@
 package com.github.mrmitew.bodylog.adapter.profile_details.last_updated.model;
 
+import com.github.mrmitew.bodylog.adapter.common.UiState;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.google.auto.value.AutoValue;
 
@@ -7,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 @AutoValue
-public abstract class LastUpdatedTextState {
+public abstract class LastUpdatedTextState extends UiState {
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);
     public static final String EMPTY = "n/a";
 

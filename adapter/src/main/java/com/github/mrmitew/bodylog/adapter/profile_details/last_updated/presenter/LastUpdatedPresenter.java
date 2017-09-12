@@ -53,7 +53,7 @@ public class LastUpdatedPresenter extends DetachableMviPresenter<LastUpdatedView
     @Override
     protected void bindInternalIntents() {
         super.bindInternalIntents();
-        mModelGateways.add(Observable.just(new LoadProfileIntent())
+        getModelGateways().add(Observable.just(new LoadProfileIntent())
                 .compose(mLoadProfileInteractor)
                 .doOnNext(state -> System.out.println(String.format("[LAST_UPDATED] [PROFILE MODEL] (%s) : %s", state.hashCode(), state)))
                 .subscribe(mProfileResultStateRelay));
@@ -95,13 +95,13 @@ public class LastUpdatedPresenter extends DetachableMviPresenter<LastUpdatedView
     }
 
     @Override
-    protected LastUpdatedTextState getInitialState() {
+    protected LastUpdatedTextState initialState() {
         return LastUpdatedTextState.Factory.idle();
     }
 
     @Override
-    protected Observable<UIIntent> getViewIntents() {
-        return mView.getProfileLastUpdatedIntent()
+    protected Observable<UIIntent> viewIntents() {
+        return getView().getProfileLastUpdatedIntent()
                 .cast(UIIntent.class);
     }
 }

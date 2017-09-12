@@ -1,12 +1,13 @@
 package com.github.mrmitew.bodylog.adapter.profile_details.main.model;
 
+import com.github.mrmitew.bodylog.adapter.common.UiState;
 import com.github.mrmitew.bodylog.adapter.common.model.StateError;
 import com.github.mrmitew.bodylog.domain.repository.entity.Profile;
 import com.google.auto.value.AutoValue;
 
 
 @AutoValue
-public abstract class ProfileDetailsState {
+public abstract class ProfileDetailsState extends UiState {
     public static class Factory {
         public static ProfileDetailsState inProgress() {
             return builder()
