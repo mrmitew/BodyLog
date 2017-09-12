@@ -13,11 +13,11 @@ public abstract class ProfileEditState extends UiState {
                     .setInProgress(false)
                     .setLoadSuccessful(false)
                     .setProfile(Profile.EMPTY)
-                    .setLoadError(StateError.Empty.INSTANCE)
+                    .setLoadError(StateError.Empty.Companion.getINSTANCE())
                     .setRequiredFieldsFilledIn(false)
-                    .setRequiredFieldsError(StateError.Empty.INSTANCE)
+                    .setRequiredFieldsError(StateError.Empty.Companion.getINSTANCE())
                     .setSaveSuccessful(false)
-                    .setSaveError(StateError.Empty.INSTANCE)
+                    .setSaveError(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
 
@@ -28,9 +28,9 @@ public abstract class ProfileEditState extends UiState {
                     .setProfile(Profile.EMPTY)
                     .setLoadError(new Throwable("Empty result"))
                     .setRequiredFieldsFilledIn(false)
-                    .setRequiredFieldsError(StateError.Empty.INSTANCE)
+                    .setRequiredFieldsError(StateError.Empty.Companion.getINSTANCE())
                     .setSaveSuccessful(false)
-                    .setSaveError(StateError.Empty.INSTANCE)
+                    .setSaveError(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
 
@@ -39,11 +39,11 @@ public abstract class ProfileEditState extends UiState {
                     .setInProgress(true)
                     .setLoadSuccessful(false)
                     .setProfile(Profile.EMPTY)
-                    .setLoadError(StateError.Empty.INSTANCE)
+                    .setLoadError(StateError.Empty.Companion.getINSTANCE())
                     .setRequiredFieldsFilledIn(false)
-                    .setRequiredFieldsError(StateError.Empty.INSTANCE)
+                    .setRequiredFieldsError(StateError.Empty.Companion.getINSTANCE())
                     .setSaveSuccessful(false)
-                    .setSaveError(StateError.Empty.INSTANCE)
+                    .setSaveError(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
 
@@ -52,11 +52,11 @@ public abstract class ProfileEditState extends UiState {
                     .setInProgress(false)
                     .setLoadSuccessful(true)
                     .setProfile(profile)
-                    .setLoadError(StateError.Empty.INSTANCE)
+                    .setLoadError(StateError.Empty.Companion.getINSTANCE())
                     .setRequiredFieldsFilledIn(false)
-                    .setRequiredFieldsError(StateError.Empty.INSTANCE)
+                    .setRequiredFieldsError(StateError.Empty.Companion.getINSTANCE())
                     .setSaveSuccessful(false)
-                    .setSaveError(StateError.Empty.INSTANCE)
+                    .setSaveError(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
 
@@ -67,9 +67,9 @@ public abstract class ProfileEditState extends UiState {
                     .setProfile(Profile.EMPTY)
                     .setLoadError(throwable)
                     .setRequiredFieldsFilledIn(false)
-                    .setRequiredFieldsError(StateError.Empty.INSTANCE)
+                    .setRequiredFieldsError(StateError.Empty.Companion.getINSTANCE())
                     .setSaveSuccessful(false)
-                    .setSaveError(StateError.Empty.INSTANCE)
+                    .setSaveError(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
     }

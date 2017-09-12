@@ -71,9 +71,9 @@ public class LastUpdatedPresenter extends DetachableMviPresenter<LastUpdatedView
             if (resultState.isInProgress()) {
                 // We are not going to indicate we are currently fetching new data,
                 // nor will replace the old one with something, but we'll just clear the error field (if there was one)
-                if (previousState.error() != StateError.Empty.INSTANCE) {
+                if (previousState.error() != StateError.Empty.Companion.getINSTANCE()) {
                     return previousState.toBuilder()
-                            .error(StateError.Empty.INSTANCE)
+                            .error(StateError.Empty.Companion.getINSTANCE())
                             .build();
                 }
                 // No error? Then, just emit the old state. No view state changes needed to be done here.
@@ -81,7 +81,7 @@ public class LastUpdatedPresenter extends DetachableMviPresenter<LastUpdatedView
             } else if (resultState.isSuccessful()) {
                 return previousState.toBuilder()
                         .lastUpdated(LastUpdatedTextState.DATE_FORMAT.format(((LoadProfileInteractor.State) resultState).profile().timestamp()))
-                        .error(StateError.Empty.INSTANCE)
+                        .error(StateError.Empty.Companion.getINSTANCE())
                         .build();
             } else if (!(resultState.error() instanceof StateError.Empty)) {
                 return previousState.toBuilder()

@@ -29,7 +29,7 @@ public class CheckRequiredFieldsInteractor implements ObservableTransformer<Chec
         public static State successful() {
             return State.builder()
                     .isSuccessful(true)
-                    .error(StateError.Empty.INSTANCE)
+                    .error(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
 
@@ -69,7 +69,7 @@ public class CheckRequiredFieldsInteractor implements ObservableTransformer<Chec
     @Override
     public ObservableSource<State> apply(final Observable<CheckRequiredFieldsIntent> upstream) {
         return upstream
-                .concatMap(intent -> Observable.just(intent.getIsFilledIn()
+                .concatMap(intent -> Observable.just(intent.isFilledIn()
                         ? State.successful()
                         : State.error(new State.Error.FieldsNotFilledInThrowable())))
                 .onErrorReturn(State::error)

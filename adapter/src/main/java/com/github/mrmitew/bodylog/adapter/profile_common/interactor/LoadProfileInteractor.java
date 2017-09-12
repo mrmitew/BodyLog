@@ -44,7 +44,7 @@ public class LoadProfileInteractor implements ObservableTransformer<LoadProfileI
                     .isInProgress(false)
                     .isSuccessful(true)
                     .profile(profile)
-                    .error(StateError.Empty.INSTANCE)
+                    .error(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
 
@@ -53,7 +53,7 @@ public class LoadProfileInteractor implements ObservableTransformer<LoadProfileI
                     .isInProgress(true)
                     .isSuccessful(false)
                     .profile(Profile.EMPTY)
-                    .error(StateError.Empty.INSTANCE)
+                    .error(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
 

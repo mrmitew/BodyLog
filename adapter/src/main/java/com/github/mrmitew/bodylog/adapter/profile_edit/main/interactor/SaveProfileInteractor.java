@@ -45,7 +45,7 @@ public class SaveProfileInteractor implements ObservableTransformer<SaveProfileI
                     .isInProgress(false)
                     .isSuccessful(true)
                     .profile(profile)
-                    .error(StateError.Empty.INSTANCE)
+                    .error(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
 
@@ -54,7 +54,7 @@ public class SaveProfileInteractor implements ObservableTransformer<SaveProfileI
                     .isInProgress(true)
                     .isSuccessful(false)
                     .profile(Profile.EMPTY)
-                    .error(StateError.Empty.INSTANCE)
+                    .error(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
 

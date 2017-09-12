@@ -16,14 +16,14 @@ public abstract class LastUpdatedTextState extends UiState {
         public static LastUpdatedTextState idle() {
             return builder().
                     lastUpdated(EMPTY)
-                    .error(StateError.Empty.INSTANCE)
+                    .error(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
 
         public static LastUpdatedTextState success(long time) {
             return builder().
                     lastUpdated(DATE_FORMAT.format(time))
-                    .error(StateError.Empty.INSTANCE)
+                    .error(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
 

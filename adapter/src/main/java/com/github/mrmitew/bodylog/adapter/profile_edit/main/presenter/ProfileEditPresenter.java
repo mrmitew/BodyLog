@@ -102,7 +102,7 @@ public class ProfileEditPresenter extends DetachableMviPresenter<ProfileEditView
                 return previousState.toBuilder()
                         .setInProgress(true)
                         .setLoadSuccessful(false)
-                        .setLoadError(StateError.Empty.INSTANCE)
+                        .setLoadError(StateError.Empty.Companion.getINSTANCE())
                         .build();
             } else if (resultState.isSuccessful()) {
                 return previousState.toBuilder()
@@ -122,7 +122,7 @@ public class ProfileEditPresenter extends DetachableMviPresenter<ProfileEditView
                 return previousState.toBuilder()
                         .setInProgress(true)
                         .setSaveSuccessful(false)
-                        .setSaveError(StateError.Empty.INSTANCE)
+                        .setSaveError(StateError.Empty.Companion.getINSTANCE())
                         .build();
             } else if (resultState.isSuccessful()) {
                 return previousState.toBuilder()
@@ -140,7 +140,7 @@ public class ProfileEditPresenter extends DetachableMviPresenter<ProfileEditView
             if (resultState.isSuccessful()) {
                 return previousState.toBuilder()
                         .setRequiredFieldsFilledIn(true)
-                        .setRequiredFieldsError(StateError.Empty.INSTANCE)
+                        .setRequiredFieldsError(StateError.Empty.Companion.getINSTANCE())
                         .build();
             } else if (!(resultState.error() instanceof StateError.Empty)) {
                 return previousState.toBuilder()

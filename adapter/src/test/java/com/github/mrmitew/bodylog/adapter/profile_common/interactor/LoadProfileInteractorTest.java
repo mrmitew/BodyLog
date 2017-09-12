@@ -61,7 +61,7 @@ public class LoadProfileInteractorTest {
         // First state should be "in progress"
         assertEquals(true, initialState.isInProgress());
         assertEquals(false, initialState.isSuccessful());
-        assertEquals(StateError.Empty.INSTANCE, initialState.error());
+        assertEquals(StateError.Empty.Companion.getINSTANCE(), initialState.error());
         assertEquals(Profile.EMPTY, initialState.profile());
 
         // No errors should be emitted
@@ -106,13 +106,13 @@ public class LoadProfileInteractorTest {
         // First state should be "in progress"
         assertEquals(true, initialState.isInProgress());
         assertEquals(false, initialState.isSuccessful());
-        assertEquals(StateError.Empty.INSTANCE, initialState.error());
+        assertEquals(StateError.Empty.Companion.getINSTANCE(), initialState.error());
         assertEquals(Profile.EMPTY, initialState.profile());
 
         // Second state should be "successful"
         assertEquals(false, secondState.isInProgress());
         assertEquals(true, secondState.isSuccessful());
-        assertEquals(StateError.Empty.INSTANCE, secondState.error());
+        assertEquals(StateError.Empty.Companion.getINSTANCE(), secondState.error());
         assertEquals(profile, secondState.profile());
 
         // No errors should be emitted
@@ -164,19 +164,19 @@ public class LoadProfileInteractorTest {
         // First state should be "in progress"
         assertEquals(true, initialState.isInProgress());
         assertEquals(false, initialState.isSuccessful());
-        assertEquals(StateError.Empty.INSTANCE, initialState.error());
+        assertEquals(StateError.Empty.Companion.getINSTANCE(), initialState.error());
         assertEquals(Profile.EMPTY, initialState.profile());
 
         // Second should be "successful"
         assertEquals(false, secondState.isInProgress());
         assertEquals(true, secondState.isSuccessful());
-        assertEquals(StateError.Empty.INSTANCE, secondState.error());
+        assertEquals(StateError.Empty.Companion.getINSTANCE(), secondState.error());
         assertEquals(profile, secondState.profile());
 
         // Third should be also "successful"
         assertEquals(false, thirdState.isInProgress());
         assertEquals(true, thirdState.isSuccessful());
-        assertEquals(StateError.Empty.INSTANCE, thirdState.error());
+        assertEquals(StateError.Empty.Companion.getINSTANCE(), thirdState.error());
         assertEquals(profile, thirdState.profile());
 
         // No errors should be emitted

@@ -14,7 +14,7 @@ public abstract class ProfileDetailsState extends UiState {
                     .inProgress(true)
                     .loadSuccessful(false)
                     .profile(Profile.EMPTY)
-                    .loadError(StateError.Empty.INSTANCE)
+                    .loadError(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
 
@@ -23,7 +23,7 @@ public abstract class ProfileDetailsState extends UiState {
                     .inProgress(false)
                     .loadSuccessful(false)
                     .profile(Profile.EMPTY)
-                    .loadError(StateError.Empty.INSTANCE)
+                    .loadError(StateError.Empty.Companion.getINSTANCE())
                     .build();
         }
     }

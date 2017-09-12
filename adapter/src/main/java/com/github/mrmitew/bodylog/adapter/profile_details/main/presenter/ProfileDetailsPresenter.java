@@ -71,7 +71,7 @@ public class ProfileDetailsPresenter extends DetachableMviPresenter<ProfileDetai
                 return previousState.toBuilder()
                         .inProgress(true)
                         .loadSuccessful(false)
-                        .loadError(StateError.Empty.INSTANCE)
+                        .loadError(StateError.Empty.Companion.getINSTANCE())
                         .build();
             } else if (resultState.isSuccessful()) {
                 return previousState.toBuilder()
