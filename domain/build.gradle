@@ -5,15 +5,14 @@ buildscript {
         }
     }
     dependencies {
-        classpath "net.ltgt.gradle:gradle-apt-plugin:$versions.javaApt"
     }
 }
 
 
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'idea'
-apply plugin: 'net.ltgt.apt'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -32,9 +31,7 @@ dependencies {
 
     // Others
     compile "com.google.dagger:dagger:$versions.dagger"
-    apt "com.google.dagger:dagger-compiler:$versions.dagger"
-    compileOnly "com.google.auto.value:auto-value:$versions.autoValue"
-    apt "com.google.auto.value:auto-value:$versions.autoValue"
+    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
     // Debugging & Inspecting
 

@@ -6,14 +6,12 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "net.ltgt.gradle:gradle-apt-plugin:$versions.javaApt"
     }
 }
 
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
 apply plugin: 'idea'
-apply plugin: 'net.ltgt.apt'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -32,8 +30,6 @@ dependencies {
     // HTTP
 
     // Others
-    compileOnly "com.google.auto.value:auto-value:$versions.autoValue"
-    apt "com.google.auto.value:auto-value:$versions.autoValue"
 
     // Debugging & Inspecting
 
