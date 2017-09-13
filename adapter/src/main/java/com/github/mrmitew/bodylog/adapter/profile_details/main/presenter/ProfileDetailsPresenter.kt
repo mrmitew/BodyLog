@@ -25,45 +25,45 @@ class ProfileDetailsPresenter @Inject constructor(
         private val profileResultStateRelay: BehaviorRelay<ResultState>)
     : DetachableMviPresenter<ProfileDetailsView, ProfileDetailsState>(ProfileDetailsView.Empty()) {
 
+
+    override fun initialState(): ProfileDetailsState = ProfileDetailsState.Factory.inProgress()
+
+    // FIXME: Ugh... no comment.
+    override fun viewIntents(): Observable<UIIntent> =
+            if (view != null) view!!.getLoadProfileIntent().cast(UIIntent::class.java) else Observable.empty<UIIntent>()
+
     override fun bindInternalIntents() {
         super.bindInternalIntents()
         modelGateways.add(Observable.just(LoadProfileIntent())
                 .compose(loadProfileInteractor)
-                .doOnNext { state -> println(String.format("[DETAILS] [PROFILE MODEL] (%s) : %s", state.hashCode(), state)) }
+                .doOnNext { println("[DETAILS] [PROFILE MODEL] (${it.hashCode()}) : $it") }
                 .subscribe(profileResultStateRelay))
     }
 
     override fun createResultStateObservable(uiIntentStream: Observable<UIIntent>): Observable<ResultState> =
             uiIntentStream.publish { shared -> shared.ofType(LoadProfileIntent::class.java).flatMap { profileResultStateRelay } }
 
-    override fun initialState(): ProfileDetailsState = ProfileDetailsState.Factory.inProgress()
-
     override fun createViewState(previousState: ProfileDetailsState, resultState: ResultState): ProfileDetailsState {
-        if (resultState is LoadProfileInteractor.State) {
-            when {
-                resultState.isInProgress -> return previousState.copy(
-                        inProgress = true,
-                        loadSuccessful = false,
-                        loadError = StateError.Empty.INSTANCE)
-                resultState.isSuccessful -> return previousState.copy(
-                        profile = resultState.profile,
-                        inProgress = false,
-                        loadSuccessful = true)
-                resultState.error !is StateError.Empty -> return previousState.copy(
-                        inProgress = false,
-                        loadSuccessful = false,
-                        loadError = resultState.error)
-            }
+        when (resultState) {
+            is LoadProfileInteractor.State ->
+                when {
+                    resultState.isInProgress -> return previousState.copy(
+                            inProgress = true,
+                            loadSuccessful = false,
+                            loadError = StateError.Empty.INSTANCE)
+
+                    resultState.isSuccessful -> return previousState.copy(
+                            profile = resultState.profile,
+                            inProgress = false,
+                            loadSuccessful = true)
+
+                    resultState.error !is StateError.Empty -> return previousState.copy(
+                            inProgress = false,
+                            loadSuccessful = false,
+                            loadError = resultState.error)
+                }
         }
 
         throw IllegalArgumentException("Unknown partial state: " + resultState)
-    }
-
-    // FIXME: Ugh... no comment.
-    override fun viewIntents(): Observable<UIIntent> {
-        if (view != null && view is ProfileDetailsView) {
-            return (view as ProfileDetailsView).getLoadProfileIntent().cast(UIIntent::class.java)
-        }
-        return Observable.empty<UIIntent>()
     }
 }

@@ -10,13 +10,13 @@ data class ProfileDetailsState(val profile: Profile,
                                val loadError: Throwable) : UiState() {
     object Factory {
         fun inProgress(): ProfileDetailsState =
-                ProfileDetailsState(profile = Profile.EMPTY,
+                ProfileDetailsState(profile = Profile.Factory.EMPTY,
                         inProgress = true,
                         loadSuccessful = false,
                         loadError = StateError.Empty.INSTANCE)
 
         fun idle(): ProfileDetailsState =
-                ProfileDetailsState(profile = Profile.EMPTY,
+                ProfileDetailsState(profile = Profile.Factory.EMPTY,
                         inProgress = false,
                         loadSuccessful = false,
                         loadError = StateError.Empty.INSTANCE)

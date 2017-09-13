@@ -26,7 +26,10 @@ interface ProfileEditActivityComponent : ActivityComponent<ProfileEditActivity> 
         internal fun providesProfileEditPresenter(loadProfileInteractor: LoadProfileInteractor,
                                                   checkRequiredFieldsInteractor: CheckRequiredFieldsInteractor,
                                                   saveProfileInteractor: SaveProfileInteractor): ProfileEditPresenter {
-            return ProfileEditPresenter(loadProfileInteractor, checkRequiredFieldsInteractor, saveProfileInteractor, BehaviorRelay.create<ResultState>())
+            return ProfileEditPresenter(loadProfileInteractor = loadProfileInteractor,
+                    saveProfileInteractor = saveProfileInteractor,
+                    checkRequiredFieldsInteractor = checkRequiredFieldsInteractor,
+                    profileResultStateRelay = BehaviorRelay.create<ResultState>())
         }
     }
 

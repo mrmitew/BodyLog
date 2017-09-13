@@ -67,7 +67,7 @@ class ProfileEditActivity : BasePresentableActivity<ProfileEditView, ProfileEdit
 
         if (!state.isSaveSuccessful && state.saveError != StateError.Empty.INSTANCE) {
             // TODO: 9/5/17 Give feedback to the user
-            println("render: " + state.saveError)
+            println("render: ${state.saveError}")
         }
     }
 
@@ -88,16 +88,15 @@ class ProfileEditActivity : BasePresentableActivity<ProfileEditView, ProfileEdit
     override fun getSaveIntent(): Observable<SaveProfileIntent> =
             RxView.clicks(btn_save)
                     .map {
-                        SaveProfileIntent(Profile.builder()
-                                .name(et_name.text.toString())
-                                .description(et_description.text.toString())
-                                .weight(et_weight.text.toString().toFloat())
-                                .bodyFat(et_body_fat_percentage.text.toString().toFloat())
-                                .armsSize(et_arms_size.text.toString().toFloat())
-                                .backSize(et_back_size.text.toString().toFloat())
-                                .chestSize(et_chest_size.text.toString().toFloat())
-                                .waistSize(et_waist_size.text.toString().toFloat())
-                                .build())
+                        SaveProfileIntent(Profile(
+                                name = et_name.text.toString(),
+                                description = et_description.text.toString(),
+                                weight = et_weight.text.toString().toFloat(),
+                                bodyFatPercentage = et_body_fat_percentage.text.toString().toFloat(),
+                                armsSize = et_arms_size.text.toString().toFloat(),
+                                backSize = et_back_size.text.toString().toFloat(),
+                                chestSize = et_chest_size.text.toString().toFloat(),
+                                waistSize = et_waist_size.text.toString().toFloat()))
                     }
 
     override fun getRequiredFieldsFilledInIntent(): Observable<CheckRequiredFieldsIntent> =
@@ -122,13 +121,13 @@ class ProfileEditActivity : BasePresentableActivity<ProfileEditView, ProfileEdit
     }
 
     private fun inflate(profile: Profile) {
-        et_name.setText(profile.name())
-        et_description.setText(profile.description())
-        et_weight.setText(profile.weight().toString())
-        et_body_fat_percentage.setText(profile.bodyFat().toString())
-        et_back_size.setText(profile.backSize().toString())
-        et_chest_size.setText(profile.chestSize().toString())
-        et_arms_size.setText(profile.armsSize().toString())
-        et_waist_size.setText(profile.waistSize().toString())
+        et_name.setText(profile.name)
+        et_description.setText(profile.description)
+        et_weight.setText(profile.weight.toString())
+        et_body_fat_percentage.setText(profile.bodyFatPercentage.toString())
+        et_back_size.setText(profile.backSize.toString())
+        et_chest_size.setText(profile.chestSize.toString())
+        et_arms_size.setText(profile.armsSize.toString())
+        et_waist_size.setText(profile.waistSize.toString())
     }
 }

@@ -42,11 +42,11 @@ class LastUpdatedTextView : BasePresentableTextView<LastUpdatedView, LastUpdated
             = Observable.just(GetProfileLastUpdatedIntent())
 
     override fun render(state: LastUpdatedTextState) {
-        if (state.error() !== StateError.Empty.INSTANCE) {
+        if (state.error != StateError.Empty.INSTANCE) {
             // TODO: 9/6/17
-            println("render: " + state.error())
+            println("render: ${state.error}")
         }
 
-        text = state.lastUpdated()
+        text = state.lastUpdated
     }
 }

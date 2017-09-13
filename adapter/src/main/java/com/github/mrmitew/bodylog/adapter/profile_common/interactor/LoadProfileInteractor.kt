@@ -23,7 +23,7 @@ class LoadProfileInteractor @Inject constructor(private val threadExecutor: Thre
                      override val error: Throwable) : ResultState(isInProgress, isSuccessful, error) {
         object Factory {
             internal fun inProgress(): State =
-                    State(Profile.EMPTY,
+                    State(Profile.Factory.EMPTY,
                             isInProgress = true,
                             isSuccessful = false,
                             error = StateError.Empty.INSTANCE)
@@ -35,7 +35,7 @@ class LoadProfileInteractor @Inject constructor(private val threadExecutor: Thre
                             error = StateError.Empty.INSTANCE)
 
             internal fun error(throwable: Throwable): State =
-                    State(Profile.EMPTY,
+                    State(Profile.Factory.EMPTY,
                             isInProgress = false,
                             isSuccessful = false,
                             error = throwable)

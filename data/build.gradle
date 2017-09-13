@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 26
@@ -31,6 +34,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$versions.kotlin"
+
     // Module dependencies
     implementation project(':adapter')
     implementation project(':domain')
@@ -50,6 +55,7 @@ dependencies {
 
     // Others
     implementation "com.google.dagger:dagger:$versions.dagger"
+    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
     annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
     annotationProcessor "com.google.auto.value:auto-value:$versions.autoValue"
     provided "com.jakewharton.auto.value:auto-value-annotations:$versions.autoValueAnnotations"

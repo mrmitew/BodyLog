@@ -60,7 +60,7 @@ class ProfileDetailsActivity : BasePresentableActivity<ProfileDetailsView, Profi
 
         if (hasError) {
             // TODO: 9/5/17 Give feedback to the user
-            println("render: (hasError) " + state.loadError)
+            println("render: (hasError) ${state.loadError}")
         }
 
         // Layout visibility
@@ -70,14 +70,14 @@ class ProfileDetailsActivity : BasePresentableActivity<ProfileDetailsView, Profi
     }
 
     private fun inflate(profile: Profile) {
-        tv_name.text = profile.name()
-        tv_description.text = profile.description()
-        tv_weight.text = profile.weight().toString()
-        tv_body_fat_percentage.text = profile.bodyFat().toString()
-        tv_back_size.text = profile.backSize().toString()
-        tv_chest_size.text = profile.chestSize().toString()
-        tv_arms_size.text = profile.armsSize().toString()
-        tv_waist_size.text = profile.waistSize().toString()
+        tv_name.text = profile.name
+        tv_description.text = profile.description
+        tv_weight.text = profile.weight.toString()
+        tv_body_fat_percentage.text = profile.bodyFatPercentage.toString()
+        tv_back_size.text = profile.backSize.toString()
+        tv_chest_size.text = profile.chestSize.toString()
+        tv_arms_size.text = profile.armsSize.toString()
+        tv_waist_size.text = profile.waistSize.toString()
     }
 
     private fun setClickListeners() {
