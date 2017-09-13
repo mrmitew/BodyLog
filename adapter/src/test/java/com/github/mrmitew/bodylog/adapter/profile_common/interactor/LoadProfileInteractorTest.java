@@ -36,7 +36,6 @@ public class LoadProfileInteractorTest {
                 new LoadProfileInteractor(Runnable::run, Schedulers::trampoline, mMockRepository);
     }
 
-
     @Test
     public void shouldReturnInProgressState_WhenEmissionStarts() {
         //
@@ -61,8 +60,8 @@ public class LoadProfileInteractorTest {
         // First state should be "in progress"
         assertEquals(true, initialState.isInProgress());
         assertEquals(false, initialState.isSuccessful());
-        assertEquals(StateError.Empty.Companion.getINSTANCE(), initialState.error());
-        assertEquals(Profile.EMPTY, initialState.profile());
+        assertEquals(StateError.Empty.Companion.getINSTANCE(), initialState.getError());
+        assertEquals(Profile.Factory.INSTANCE.getEMPTY(), initialState.getProfile());
 
         // No errors should be emitted
         stateTestObserver.assertNoErrors();
@@ -73,16 +72,17 @@ public class LoadProfileInteractorTest {
         //
         // Arrange
         //
-        final Profile profile = Profile.builder()
-                .name("Test")
-                .description("Test")
-                .weight(0)
-                .bodyFat(0)
-                .backSize(0)
-                .chestSize(0)
-                .armsSize(0)
-                .waistSize(0)
-                .build();
+        final Profile profile = new Profile(
+                "Test",
+                "Test",
+                0f,
+                0f,
+                0f,
+                0f,
+                0f,
+                0f,
+                System.currentTimeMillis(),
+                false);
 
         when(mLoadProfileInteractor.getUseCaseObservable())
                 .thenReturn(Observable.just(profile));
@@ -106,14 +106,14 @@ public class LoadProfileInteractorTest {
         // First state should be "in progress"
         assertEquals(true, initialState.isInProgress());
         assertEquals(false, initialState.isSuccessful());
-        assertEquals(StateError.Empty.Companion.getINSTANCE(), initialState.error());
-        assertEquals(Profile.EMPTY, initialState.profile());
+        assertEquals(StateError.Empty.Companion.getINSTANCE(), initialState.getError());
+        assertEquals(Profile.Factory.INSTANCE.getEMPTY(), initialState.getProfile());
 
         // Second state should be "successful"
         assertEquals(false, secondState.isInProgress());
         assertEquals(true, secondState.isSuccessful());
-        assertEquals(StateError.Empty.Companion.getINSTANCE(), secondState.error());
-        assertEquals(profile, secondState.profile());
+        assertEquals(StateError.Empty.Companion.getINSTANCE(), secondState.getError());
+        assertEquals(profile, secondState.getProfile());
 
         // No errors should be emitted
         stateTestObserver.assertNoErrors();
@@ -124,16 +124,17 @@ public class LoadProfileInteractorTest {
         //
         // Arrange
         //
-        final Profile profile = Profile.builder()
-                .name("Test")
-                .description("Test")
-                .weight(0)
-                .bodyFat(0)
-                .backSize(0)
-                .chestSize(0)
-                .armsSize(0)
-                .waistSize(0)
-                .build();
+        final Profile profile = new Profile(
+                "Test",
+                "Test",
+                0f,
+                0f,
+                0f,
+                0f,
+                0f,
+                0f,
+                System.currentTimeMillis(),
+                false);
 
         when(mLoadProfileInteractor.getUseCaseObservable())
                 .thenReturn(Observable.just(profile));
@@ -164,20 +165,20 @@ public class LoadProfileInteractorTest {
         // First state should be "in progress"
         assertEquals(true, initialState.isInProgress());
         assertEquals(false, initialState.isSuccessful());
-        assertEquals(StateError.Empty.Companion.getINSTANCE(), initialState.error());
-        assertEquals(Profile.EMPTY, initialState.profile());
+        assertEquals(StateError.Empty.Companion.getINSTANCE(), initialState.getError());
+        assertEquals(Profile.Factory.INSTANCE.getEMPTY(), initialState.getProfile());
 
         // Second should be "successful"
         assertEquals(false, secondState.isInProgress());
         assertEquals(true, secondState.isSuccessful());
-        assertEquals(StateError.Empty.Companion.getINSTANCE(), secondState.error());
-        assertEquals(profile, secondState.profile());
+        assertEquals(StateError.Empty.Companion.getINSTANCE(), secondState.getError());
+        assertEquals(profile, secondState.getProfile());
 
         // Third should be also "successful"
         assertEquals(false, thirdState.isInProgress());
         assertEquals(true, thirdState.isSuccessful());
-        assertEquals(StateError.Empty.Companion.getINSTANCE(), thirdState.error());
-        assertEquals(profile, thirdState.profile());
+        assertEquals(StateError.Empty.Companion.getINSTANCE(), thirdState.getError());
+        assertEquals(profile, thirdState.getProfile());
 
         // No errors should be emitted
         stateTestObserver.assertNoErrors();
@@ -210,8 +211,8 @@ public class LoadProfileInteractorTest {
         // Second state should be "error"
         assertEquals(false, secondState.isInProgress());
         assertEquals(false, secondState.isSuccessful());
-        assertEquals(expectedError, secondState.error());
-        assertEquals(Profile.EMPTY, secondState.profile());
+        assertEquals(expectedError, secondState.getError());
+        assertEquals(Profile.Factory.INSTANCE.getEMPTY(), secondState.getProfile());
 
         // No errors should be emitted
         stateTestObserver.assertNoErrors();
