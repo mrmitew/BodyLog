@@ -20,8 +20,8 @@ import com.github.mrmitew.bodylog.framework.common.view.BasePresentableActivity
 import com.github.mrmitew.bodylog.framework.di.activity.HasActivitySubcomponentBuilders
 import com.github.mrmitew.bodylog.framework.di.presenter.PresenterHolderInjector
 import com.github.mrmitew.bodylog.framework.profile_edit.di.ProfileEditActivityComponent
-import com.jakewharton.rxbinding2.view.RxView
-import com.jakewharton.rxbinding2.widget.RxTextView
+import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.widget.textChanges
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.activity_profile_edit.*
@@ -86,7 +86,7 @@ class ProfileEditActivity : BasePresentableActivity<ProfileEditView, ProfileEdit
             Observable.just(LoadProfileIntent())
 
     override fun getSaveIntent(): Observable<SaveProfileIntent> =
-            RxView.clicks(btn_save)
+            btn_save.clicks()
                     .map {
                         SaveProfileIntent(Profile(
                                 name = et_name.text.toString(),
@@ -109,13 +109,13 @@ class ProfileEditActivity : BasePresentableActivity<ProfileEditView, ProfileEdit
 
 
     private fun getNameIntent(): Observable<String> {
-        return RxTextView.textChanges(et_name)
+        return et_name.textChanges()
                 .skip(1)
                 .map { it.toString() }
     }
 
     private fun getDescriptionIntent(): Observable<String> {
-        return RxTextView.textChanges(et_description)
+        return et_description.textChanges()
                 .skip(1)
                 .map { it.toString() }
     }

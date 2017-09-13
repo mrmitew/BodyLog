@@ -113,8 +113,10 @@ dependencies {
 
     // Reactive
     implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava2"
+    implementation "io.reactivex.rxjava2:rxkotlin:$versions.rxKotlin"
     implementation "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
     implementation "com.jakewharton.rxbinding2:rxbinding:$versions.rxJava2Bindings"
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$versions.rxJava2Bindings"
     implementation "com.jakewharton.rxrelay2:rxrelay:$versions.rxRelay2"
     implementation "android.arch.lifecycle:runtime:$versions.lifecycle"
     implementation "android.arch.lifecycle:extensions:$versions.lifecycle"
