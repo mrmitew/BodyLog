@@ -1,5 +1,7 @@
 # Bodylog
 
+_**NOTE:** For Kotlin version of this app, navigate to: https://github.com/mrmitew/BodyLog-Kotlin_
+
 The main goal of this (WIP) project is to demonstrate an implementation of the Model-View-Intent (MVI) design pattern, which aims at having a unidirectional data flow where application state is driven by the business logic.
 
 The project follows the "clean" approach for architecting apps and is composed of several modules (both Android and pure java), namely:
