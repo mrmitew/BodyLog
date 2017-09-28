@@ -1,4 +1,4 @@
-# Bodylog
+# Bodylog (Deprecated in favor of BodyLog-Kotlin)
 
 _**NOTE:** For Kotlin version of this app, navigate to: https://github.com/mrmitew/BodyLog-Kotlin_
 
